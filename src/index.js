@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(<App name = "Kevin, MoLa, Brandon" />, document.getElementById('root'));
+
+ReactDOM.render(<App name = "kevin" />, document.getElementById('root'));
 
 
 

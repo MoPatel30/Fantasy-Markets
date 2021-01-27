@@ -1,18 +1,33 @@
 import React from 'react'
 import "./App.css"
 import PracticeCounter from "./PracticeCounter/PracticeCounter.jsx"
+import Arrays from "./Arrays/Arrays"
 
 
 
 function App({name}) {
   return (
     <div className = "App">
-      <h1>Hello {name}</h1>
+      <h1 style = {{fontWeight: "900", color: "white"}}>Hello {name}</h1>
+
       <PracticeCounter />
+
+
+      <Arrays />
+
+   
     </div>
   )
 }
 
 export default App
 
+
+export function App2(){
+  return(
+    <div>
+      <p>Hello</p>
+    </div>
+  )
+}
 

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import "./PracticeCounter.css"
 
-
-
-export class PracticeCounter extends Component {
+class PracticeCounter extends Component {
     constructor(){
         super()
         this.state = {
@@ -12,6 +10,7 @@ export class PracticeCounter extends Component {
     }
 
 
+    
     incrementCount(){
         this.setState({
             count: this.state.count + 1
