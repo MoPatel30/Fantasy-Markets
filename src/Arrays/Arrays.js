@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import "./Arrays.css"
 
-// hello
+
 
 function Arrays() {
     const [array, setArray] = useState([9,8,7])
