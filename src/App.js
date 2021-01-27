@@ -6,6 +6,8 @@ import Arrays from "./Arrays/Arrays"
 // test
 //test mola
 
+// final mola test
+
 
 function App({name}) {
   return (
