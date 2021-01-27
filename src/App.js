@@ -16,6 +16,12 @@ function App({name}) {
 
       <Arrays />
 
+      {
+        //test
+        /*
+      <Arrays />
+        */
+      }
    
     </div>
   )
