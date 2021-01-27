@@ -5,13 +5,23 @@ import Arrays from "./Arrays/Arrays"
 
 // test
 
+
 function App({name}) {
   return (
     <div className = "App">
       <h1>Hello {name}</h1>
       <PracticeCounter />
 
+      
+      <h1 style = {{fontWeight: "900", color: "white"}}>Hello {name}</h1>
+
+      <PracticeCounter />
+
+
+      <Arrays />
+
       {
+        //test
         /*
       <Arrays />
         */
@@ -23,4 +33,12 @@ function App({name}) {
 
 export default App
 
+
+export function App2(){
+  return(
+    <div>
+      <p>Hello</p>
+    </div>
+  )
+}
 

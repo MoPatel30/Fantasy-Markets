@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import "./PracticeCounter.css"
 
+<<<<<<< HEAD
 
 
 export class PracticeCounter extends Component {
+=======
+class PracticeCounter extends Component {
+>>>>>>> 962bd71b1d8ad7d04033db0c4531a794a437363f
     constructor(){
         super()
         this.state = {
@@ -12,6 +16,10 @@ export class PracticeCounter extends Component {
     }
 
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 962bd71b1d8ad7d04033db0c4531a794a437363f
     incrementCount(){
         this.setState({
             count: this.state.count + 1
