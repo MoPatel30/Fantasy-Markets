@@ -4,7 +4,8 @@ import "./Arrays.css"
 
 
 function Arrays() {
-    const [array, setArray] = useState([9,8,7])
+
+    const [array, setArray] = useState([9])
 
 
     function insertToArray(){
