@@ -12,6 +12,7 @@ function App({name}) {
       <PracticeCounter />
 
       {
+        //test
         /*
       <Arrays />
         */
