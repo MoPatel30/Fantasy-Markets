@@ -4,6 +4,7 @@ import PracticeCounter from "./PracticeCounter/PracticeCounter.jsx"
 import Arrays from "./Arrays/Arrays"
 
 // test
+//test mola
 
 
 function App({name}) {
