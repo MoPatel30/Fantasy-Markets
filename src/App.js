@@ -5,9 +5,8 @@ import Arrays from "./Arrays/Arrays"
 
 // test
 //test mola
-
 // final mola test
-
+// looks like everything works for now. 1/27 2:51
 
 function App({name}) {
   return (
