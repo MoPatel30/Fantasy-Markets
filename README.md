@@ -23,8 +23,8 @@ More languages, tools, and services will be added as we see fit.
 
 ## Creators
 
-Mohammed Patel
-Mohammad Larya
-Kevin Guilluame
+Mohammed Patel, 
+Mohammad Larya, 
+Kevin Guilluame, 
 Brandon Moy
 
