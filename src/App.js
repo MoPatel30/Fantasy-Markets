@@ -1,15 +1,20 @@
 import React from 'react'
 import "./App.css"
 import Stocks from "./Stocks/Stocks"
-import Crypto, {CreatePortfolio} from "./Crypto/Crypto"
+import Portfolio from "./Portfolio/Portfolio"
+import Investor from "./Investors/Investor"
 
 
 function App() {
   return (
     <div className = "App">
-      <h1>Fantasy Markets</h1>
+      <header>
+        <h1>
+          <em className = "name">Fantasy Markets</em>
+        </h1>
+      </header>
 
-      <CreatePortfolio />
+      <Investor />
 
     </div>
   )

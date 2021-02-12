@@ -1,0 +1,14 @@
+.coin-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+
+    margin-top: 10px;
+    font-weight: 600;
+    color: black;
+    background-color: rgb(203, 206, 255);
+    border: 1px solid grey;
+    border-radius: 5px;
+
+}

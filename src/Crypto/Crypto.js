@@ -42,15 +42,13 @@ function Crypto({portfolio}) {
 
     return (
         <div>
-            <h1>Portfolio Breakdown</h1>
            
             {Object.keys(portfolio).map(currency => (
                 <div>
-                    <div>
+                    <div className = "coin-info">
                         <p>Name: {currency}</p>
-                        <p>Amount deployed: {portfolio[currency]}</p>
+                        <p>Amount Invested: {portfolio[currency]} USD</p>
                         <p>Current position: {getCoinInfo(currency, portfolio[currency])} {currency}</p>
-                
                     </div>
                    
                 </div>
@@ -65,50 +63,4 @@ function Crypto({portfolio}) {
 export default Crypto
 
 
-
-
-export function CreatePortfolio() {
-    const [amount, setAmount] = useState(10000)
-    const [assets, setAssets] = useState({})
-    const [coinName, setCoinName] = useState("")
-    const [coinAmount, setCoinAmount] = useState(0)
-
-
-    function addCoin(){
-        if(Object.keys(assets).length > 4){
-            alert("you are only allowed a maximum of 5 coins. Please rebalance your portfolio if you wish to use your remaining cash.")
-        }
-        if(amount - coinAmount < 0){
-            alert("Not enough funds remaining")
-        }
-        else{
-
-            let name = coinName
-
-            setAssets({...assets, [name]: coinAmount}) 
-           
-            setAmount(amount - coinAmount)
-            console.log(amount)
-            setCoinName("")
-            setCoinAmount(0)
-            console.log(assets)
-        }
-    }
-
-
-    return (
-        <div>
-            <p>Choose up to five coins to deploy money to</p>
-            <p>Funds remaining: {amount}</p>
-
-            <input type = "text" placeholder = "Full coin name" onChange = {(e) => setCoinName(e.target.value)}></input>
-            <input type = "number" placeholder = "Amount in USD" onChange = {(e) => setCoinAmount(e.target.value)}></input>
-
-            <button type = "submit" onClick = {addCoin}> Add coin </button>
-            
-            <Crypto portfolio = {assets} />
-       
-        </div>
-    )
-}
 
