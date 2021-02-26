@@ -4,6 +4,7 @@ import Stocks from "./Stocks/Stocks"
 import Portfolio from "./Portfolio/Portfolio"
 import Investor from "./Investors/Investor"
 import GameSession from './GameSession/GameSession'
+import Login from "./Login/Login"
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <div className = "App">
+      <Login />
       <header>
         <h1>
           <em className = "name">Fantasy Markets</em>
