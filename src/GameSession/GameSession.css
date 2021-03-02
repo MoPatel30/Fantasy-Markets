@@ -5,6 +5,16 @@
     padding-right: 5rem;
     padding-top: 3rem;
     padding-bottom: 3rem;
+    color: white;
+    background-color: black;
 
     
 }
+
+.players{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+

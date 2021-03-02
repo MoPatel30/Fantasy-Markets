@@ -15,7 +15,7 @@ function Crypto({portfolio}) {
             qs: {
               'slug': currency,
             },
-            //3164df64-a813-4a8b-a580-b2e741064780
+            
             headers: {
               'X-CMC_PRO_API_KEY': ''
             },

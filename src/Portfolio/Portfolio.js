@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 import Crypto from "../Crypto/Crypto"
 import "./Portfolio.css"
+import { connect } from 'react-redux'
+import store from ".././Redux/index"
+import {auth, provider} from "../firebase.js"
 
 
 
-function Portfolio({name}) {
+function Portfolio({username}) {
     const [amount, setAmount] = useState(10000)
     const [assets, setAssets] = useState({})
     const [coinName, setCoinName] = useState("")
@@ -34,7 +37,7 @@ function Portfolio({name}) {
 
     return (
         <div className = "portfolio">           
-            <h1><u className = "title">{name}'s Portfolio</u></h1>
+            <h1><u className = "title">{username}'s Portfolio</u></h1>
 
             <div className = "add-coin">
                 <p>Coins remaining: {numberOfCoins} </p>
@@ -50,5 +53,10 @@ function Portfolio({name}) {
     )
 }
 
+const mapStateToProps = (state) => ({
+    username: state.username,
+    userInfo: state.userInfo
+})
 
-export default Portfolio
+
+export default (connect)(mapStateToProps)(Portfolio)
