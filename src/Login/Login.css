@@ -1,0 +1,58 @@
+*{
+    margin: auto;
+    font-family: "poppins", sans serif;
+}
+
+
+.background{
+    height: 100vh;
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperset.com%2Fw%2Ffull%2F5%2F4%2Fd%2F198521.jpg&f=1&nofb=1");
+    background-size: 100% 100%;
+    color: white;
+}
+
+.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.header{
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 5%;
+    font-weight: 600;
+}
+
+.slogan{
+    font-size: 2rem;
+    margin-bottom: 15%;
+    font-weight: 500;
+}
+
+.play{
+    font-size: 2rem;
+}
+
+.google:hover{
+    background-color: #4285f4;
+    color: white;
+    padding: 1rem;
+    width: 15%;
+    border-radius: 50px;
+    border: 2px solid grey;
+    transition: 0.2s ease-in-out;
+}
+
+.google{
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 1rem;
+    min-width: 15%;
+    border-radius: 50px;
+    transition: 0.2s ease-in-out;
+    font-size: 1.5rem; 
+}

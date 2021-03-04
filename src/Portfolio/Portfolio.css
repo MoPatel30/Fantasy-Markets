@@ -1,0 +1,40 @@
+.portfolio {
+    background-color: #eaf4fc;
+    border: 2px solid black;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 60vw;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.add-coin{
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    
+}
+
+button {
+    border: 1px solid grey;
+    background-color: rgb(255, 103, 103);
+    color: white;
+    font-weight: 900;
+}
+
+button:hover{
+    background-color: rgb(255, 50, 50);
+}
+
+input {
+    border: 1px solid grey;
+}
