@@ -6,6 +6,7 @@ import Investor from "./Investors/Investor"
 import GameSession from './GameSession/GameSession'
 import Login from "./Login/Login"
 import {connect} from "react-redux"
+import CreateGame from './CreateGame/CreateGame'
 
 
 function App({ username }) {
@@ -47,7 +48,8 @@ function App({ username }) {
 
             <button type = "submit" onClick = {createNewGameSession}>Create Game</button>          
             <Investor />
-
+            //We can add a boolean var that is true when "create a game" is clicked then it renders, but if false wont render
+            <CreateGame />
             {games.map(gameInfo => (
               <div>
                 <GameSession gameInfo = {gameInfo} />
