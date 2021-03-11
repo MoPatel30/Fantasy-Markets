@@ -7,11 +7,13 @@ import Login from "./Login/Login"
 import {connect} from "react-redux"
 import CreateGame from './CreateGame/CreateGame'
 import Profile from "./Profile/Profile"
+import FindGames from "./FindGames/FindGames"
 
 
 function App({ username }) {
   const [games, setGames] = useState([])
   const [showProfile, setShowProfile] = useState(false)
+  const [showFindGames, setShowFindGames] = useState(false)
 
   function createNewGameSession(){
     setGames([...games, {name: "Crypto 101", playerCount: 4, duration: "14 days", amount: 10000, players: ["Mo Patel", "Mo Larya", "Kevin", "Brandon"]}])
@@ -19,6 +21,10 @@ function App({ username }) {
 
   function setProfileVisibility(){
     setShowProfile(!showProfile)
+  }
+
+  function setFindGamesVisibility(){
+    setShowFindGames(!showFindGames)
   }
 
   useEffect(() => {
@@ -36,7 +42,7 @@ function App({ username }) {
 
               <ul className = "link-style">
                 <li>
-                  <a className = "link" href="#game" style = {{color: "white"}}><strong>Find a Game</strong></a>
+                  <a onClick = {setFindGamesVisibility} className = "link" href="#game" style = {{color: "white"}}><strong>Find a Game</strong></a>
                 </li>
                 <li>
                   <a className = "link" href="#mygames" style = {{color: "white"}}><strong>Create a Game</strong></a>
@@ -51,9 +57,16 @@ function App({ username }) {
 
             </header>
 
-            { showProfile ? (
+            {showProfile ? (
               <Profile />
-            ) : (
+            ): (
+              <p></p>
+            )
+            }
+
+            {showFindGames ? (
+              <FindGames />
+            ): (
               <p></p>
             )
             }
