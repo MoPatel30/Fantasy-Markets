@@ -8,6 +8,7 @@ import firebase from "firebase"
 function CreateGame() {
     const docRef = db.collection("current_games")
     const create = store.getState().userInfo.email
+    const userRef = db.collection("users")
 
     function createGame(e){
         e.preventDefault()
@@ -19,7 +20,7 @@ function CreateGame() {
             console.log(pair[0] + ': ' + pair[1])
         }
         // firebase.firestore.FieldValue.serverTimestamp()
-        docRef.doc().set({
+        docRef.add({
             name: data[0],
             creator: create,
             starting_amount: data[1],
@@ -27,11 +28,14 @@ function CreateGame() {
             start_date: new Date(Date.now()).toString(),
             end_date: new Date(Date.now() + 12096e5).toString(),
             max_players: data[3],
-            players: {[create]: {cash: data[1]}},
-           
+            player_count: 1,
+            [create]: {cash: data[1]}
         })
-        .then(() => {
-            console.log("Document successfully written!")
+        .then((doc) => {
+            console.log("Document successfully written!", doc.id)
+            userRef.doc(create).update({
+               current_games: [doc.id]
+           })
         })
         .catch((error) => {
             console.error("Error writing document: ", error)
