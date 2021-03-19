@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "./FindGames.css"
 import { db } from "../firebase"
 import store from "../Redux/index"
+import firebase from "firebase"
 
 
 function FindGames() {
@@ -50,9 +51,16 @@ function FindGames() {
         //     })
     }, [])
 
-    function joinGameSession(id, name){
-        // db.collection("current_games").doc(`${id}`).update({
-        //    [name]: {cash: "6696"}})
+    function joinGameSession(e){
+        e.preventDefault()
+
+        db.collection("current_games").doc(e.target.value).update({
+            [store.getState().email]: {cash: "6696"}})
+        
+        console.log(e.target.value) 
+        
+        db.collection("users").doc(`${store.getState().userInfo.email}`).update({
+            current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)})
     }
 
     return (
@@ -69,9 +77,9 @@ function FindGames() {
                     <h3>Duration: {instance.data().duration - 1} weeks</h3>
                     <h3>Start date: {instance.data().start_date}</h3>
                     <h3>End date: {instance.data().end_date}</h3>
-                    <h3>{instance.id}</h3>
+                    <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3>
                     {1 < instance.data().max_players ? (
-                        <button onClick={joinGameSession(instance.id, store.getState().userInfo.email)}>Join</button>
+                        <button value={`${instance.id}`} onClick={joinGameSession}>Join</button>
                     ): (
                         <p></p>
                     )

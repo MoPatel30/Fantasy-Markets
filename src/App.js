@@ -71,7 +71,7 @@ function App({ username }) {
 
               <Route path="/" />
               <Route path="/find"  component={FindGames} />
-              {/* <Route path="/games"  component={MyGames} /> */}
+              <Route path="/games"  component={MyGames} />
               <Route path="/profile"  component={Profile} />
 
             </header>
@@ -90,12 +90,12 @@ function App({ username }) {
             )
             }
 
-            {/* {showMyGames ? (
+            {showMyGames ? (
               <MyGames />
             ): (
               <p></p>
             )
-            } */}
+            }
 
             <button type = "submit" onClick = {createNewGameSession}>Create Game</button>          
             <Investor />
