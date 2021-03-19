@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import "./Login.css"
 import { connect } from 'react-redux'
 import store from ".././Redux/index"
-import {auth, provider} from "../firebase.js"
+import {auth, provider, db} from "../firebase.js"
 import firebase from "firebase"
 
 
@@ -18,14 +18,44 @@ export const Login = (props) => {
                 .then((result) =>{
                     console.log(result)  
                     updateUserInfo(result.user.displayName, result)
-                    store.dispatch({
+                    store.dispatch({     // store user info in global state 
                         type: "ADD_POST",
                         payload: {
                             username: result.user.displayName,
+                            email: result.user.email,
                             userInfo: result.user,
                         } 
                     }) 
                     setName(result.user.displayName)
+                    
+                    var docRef = db.collection("users").doc(result.user.email);
+                    // check if user credentials already exist. add new user data if they don't.
+                    docRef.get().then((doc) => {
+                        if (doc.exists) {
+                            console.log("Document data:", doc.data());
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("No such document!");
+                            db.collection("users").doc(result.user.email).set({
+                                name: result.user.displayName,
+                                display_name: result.user.displayName,
+                                bio: `Hi, my name is ${result.user.displayName}!`,
+                                wins: 0,
+                                current_games: [],
+                                previous_games: [],
+                                games_won: []
+                            })
+                            .then(() => {
+                                console.log("Document successfully written!")
+                            })
+                            .catch((error) => {
+                                console.error("Error writing document: ", error)
+                            })
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error)
+                    })
+
                 })
                 .catch((error) => alert(error.message)) 
             })

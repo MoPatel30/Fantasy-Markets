@@ -1,0 +1,11 @@
+.game-style{
+    border: 1px solid black;
+    border-radius: 15px;
+    width: fit-content;
+    padding: 2rem;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
