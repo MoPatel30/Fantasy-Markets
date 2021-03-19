@@ -1,0 +1,129 @@
+#blurry-filter {
+    width: 100%;
+    height: 9rem;
+    mask: linear-gradient(black 7rem, transparent);
+    -webkit-mask: linear-gradient(black 7rem, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    pointer-events: none;
+    touch-action: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #EEE;
+    font-family: "Open Sans", sans-serif;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+header {
+    width: 100%;
+    height: 8rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+header > div {
+    width: calc(100% - 3rem);
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+#title {
+    width: 100%;
+}
+#title .parent {
+    line-height: 1em;
+    color: #666;
+}
+#title .name {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    mix-blend-mode: difference;
+}
+
+#reference {
+    display: flex;
+}
+#reference > a {
+    color: #444;
+}
+#reference > a + a {
+    margin-left: 1rem;
+}
+
+main, #folders {
+    width: calc(100% - 3rem);
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 1.5rem;
+}
+
+main > article {
+    width: 100%;
+    height: 32px;
+    padding: 1rem;
+    background-color: #FFF;
+}
+main > figure {
+    width: 100%;
+    margin: 0;
+    background-color: #FFF;
+    background-size: cover;
+    border-radius: 1rem;
+    transition: all 100ms ease-out;
+}
+main > figure:hover {
+    box-shadow: 0 16px 16px -4px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+}
+main > figure:after {
+    content: "";
+    padding-bottom: 100%;
+    display: block;
+}
+main > figure > figcaption {
+    margin: 1rem;
+    color: #FFF;
+    font-size: 1.25em;
+    position: absolute;
+}
+
+#folders {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
+#folders > article {
+    width: 100%;
+    height: 4rem;
+    padding: 0 1.5rem;
+    background-color: #FFF;
+    border-radius: 1rem;
+    line-height: 4rem;
+    transition: all 100ms ease-out;
+}
+#folders > article:hover {
+    box-shadow: 0 16px 16px -4px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+footer {
+    width: 100%;
+    height: 8rem;
+}

@@ -10,10 +10,10 @@ import Profile from "./Profile/Profile"
 import FindGames from "./FindGames/FindGames"
 import MyGames from "./MyGames/MyGames"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Test from "./test/test"
 
 
-
-function App({ username }) {
+function App({ username, userInfo }) {
   const [games, setGames] = useState([])
   const [showProfile, setShowProfile] = useState(false)
   const [showFindGames, setShowFindGames] = useState(false)
@@ -40,20 +40,32 @@ function App({ username }) {
   }, [games])
 
   return (
+    // <div>
+    //   <Test />
+    // </div>
+
     <div className = "App">
       { username ? (
         <Router>
           <div>
+            <div id="blurry-filter"></div>
             <header>
-              <h1>
-                <em className = "name">Fantasy Markets</em>
-              </h1>
+            <div>
+              <article id="title"><span className="parent">Fantasy</span><br/><span className="name">Markets</span></article>
+             
+              <Link to="/profile"> 
+                <a>
+                  <img className="home-pro-pic" src={userInfo.photoURL} />
+                </a>
+              </Link>
+              
+            </div>
 
               <nav>
-              <ul className = "link-style">
+              <ul id = "folders">
                 <li><Link to="/find">Find a Game</Link></li>
                 <li><Link to="/games">My Games</Link></li>
-                <li><Link to="/profile">Profile</Link></li>
+                <li><Link to="/create">Create Game</Link></li>
                 {/* <li>
                   <a onClick = {setFindGamesVisibility} className = "link" href="#games" style = {{color: "white"}}><strong>Find a Game</strong></a>
                 </li>
@@ -68,10 +80,11 @@ function App({ username }) {
                 </li> */}
               </ul>
               </nav>
-
+  
               <Route path="/" />
               <Route path="/find"  component={FindGames} />
               <Route path="/games"  component={MyGames} />
+              <Route path="/create"  component={CreateGame} />
               <Route path="/profile"  component={Profile} />
 
             </header>
@@ -97,9 +110,9 @@ function App({ username }) {
             )
             }
 
-            <button type = "submit" onClick = {createNewGameSession}>Create Game</button>          
-            <Investor />
-            <CreateGame />
+            {/* <Investor /> */}
+
+         
             {games.map(gameInfo => (
               <div>
                 <GameSession gameInfo = {gameInfo} />
