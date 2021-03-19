@@ -11,6 +11,7 @@
 # production
 /build
 
+/test
 
 package-lock.json
 

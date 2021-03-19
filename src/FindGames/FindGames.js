@@ -125,18 +125,17 @@ export default FindGames
 
 
 /*
-
   <figure style={{backgroundColor: "#777"}}>
-                            <figcaption>{instance.data().name}</figcaption>
-                            
-                            <figcaption>Players: 1 / {instance.data().max_players}</figcaption>
-                            <figcaption>Starting Amount: {instance.data().starting_amount}</figcaption>
-                    
-                            <figcaption>Duration: {instance.data().duration - 1} weeks</figcaption>
-                            <figcaption>Start: {instance.data().start_date}</figcaption>
-                            <figcaption>End: {instance.data().end_date}</figcaption>
-                            <figcaption id = "id" value = {`${instance.id}`}>{instance.id}</figcaption>
+    <figcaption>{instance.data().name}</figcaption>
 
-                            <button value={`${instance.id}`} onClick={joinGameSession}>Join</button>
-                        </figure>
+    <figcaption>Players: 1 / {instance.data().max_players}</figcaption>
+    <figcaption>Starting Amount: {instance.data().starting_amount}</figcaption>
+
+    <figcaption>Duration: {instance.data().duration - 1} weeks</figcaption>
+    <figcaption>Start: {instance.data().start_date}</figcaption>
+    <figcaption>End: {instance.data().end_date}</figcaption>
+    <figcaption id = "id" value = {`${instance.id}`}>{instance.id}</figcaption>
+
+    <button value={`${instance.id}`} onClick={joinGameSession}>Join</button>
+    </figure>
 */
