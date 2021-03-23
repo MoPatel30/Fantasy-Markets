@@ -71,25 +71,39 @@ function FindGames() {
                         <div className="flip-card">
                             <div className="flip-card-inner">
                                 <div className="flip-card-front">
-                                    <h1>Name: {instance.data().name}</h1>
-                                    <h3>Duration: {instance.data().duration - 1} weeks</h3>
-        
-                                    <h2>Players: 1 / {instance.data().max_players}</h2>
-    
-                                    {1 < instance.data().max_players ? (
-                                    <button value={`${instance.id}`} onClick={joinGameSession}>Join</button>
-                                    ): (
-                                        <p></p>
-                                    )
-                                    }
+                                    <div id="spanner">
+                                        <span><u>Name: {instance.data().name}</u></span>
+                                        <span><u>Creator: {instance.data().creator}</u></span>
+                                    </div>
+       
+
+                                    <div id="non-spanner">
+                                        <h3>Starting Amount: {instance.data().starting_amount} USD</h3>
+                                        <h3>Duration: {instance.data().duration - 1} {instance.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
+                                    </div>
+                               
+
+                                    <div id="non-spanner">
+                                        <h3>Start date: {instance.data().start_date}</h3>
+                                        <h3>End date: {instance.data().end_date}</h3>
+                                    </div>
+
+
+                                    <div id="spanner">                                 
+                                        <span>Players: 1 / {instance.data().max_players}</span>
+                                        {1 < instance.data().max_players ? (
+                                        <button value={`${instance.id}`} onClick={joinGameSession}>Join</button>
+                                        ): (
+                                            <p></p>
+                                        )
+                                        }
+                                    </div>
+
+                                    {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}
                                 </div>
                                 <div className="flip-card-back">                        
-                                    <h1>creator: {instance.data().creator}</h1>
-                                    <h2>Starting Amount: {instance.data().starting_amount}</h2>
-
-                                    <h3>Start date: {instance.data().start_date}</h3>
-                                    <h3>End date: {instance.data().end_date}</h3>
-                                    <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3>
+                                    <h1>{instance.data().creator}</h1>
+                                    <p>Add current game lobby</p>
                                 </div>
                             </div>
                         </div>

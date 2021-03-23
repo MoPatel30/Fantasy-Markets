@@ -22,7 +22,7 @@ function App({ username, userInfo }) {
             <div id="blurry-filter"></div>
             <header>
             <div>
-              <article id="title"><span className="parent">Fantasy</span><br/><span className="name">Markets</span></article>
+              <article id="title"><span className="parent" style={{color: "red"}}>Fantasy</span><br/><span className="name" style={{color: "blue"}}>Markets</span></article>
              
               <Link to="/profile"> 
                 <a>
@@ -31,6 +31,8 @@ function App({ username, userInfo }) {
               </Link>
               
             </div>
+
+            <hr id="header-line" />
 
               <nav>
               <ul id = "folders">

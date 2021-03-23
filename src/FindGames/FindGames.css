@@ -1,9 +1,9 @@
 #game-style{
     border: 1px solid black;
     border-radius: 15px;
-    min-width: 58vw;
+    min-width: 50vw;
     margin: auto;
-    padding: 2rem;
+    padding: 2rem;  
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -43,8 +43,17 @@ figure > figcaption {
 }
 
 
+#spanner{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
 
-
+#non-spanner{
+    text-align: left;
+    text-indent: 2%;
+}
 
 
 
@@ -53,8 +62,8 @@ figure > figcaption {
 
 .flip-card {
     background-color: transparent;
-    width: 400px;
-    height: 300px;
+    width: 800px;
+    height: 200px;
     padding: 8px;
     padding-left:60px;
     padding-right: 60px;
@@ -87,12 +96,14 @@ figure > figcaption {
   
   /* Style the front side (fallback if image is missing) */
   .flip-card-front {
-    background-color: #1a1a1a;
-    color: white;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
   }
   
   /* Style the back side */
   .flip-card-back {
+    border-radius: 20px;
     background-color: #d8d8d8;
     transform: rotateY(180deg);
   }

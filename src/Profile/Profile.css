@@ -1,4 +1,46 @@
 .profile-pic{
     border: 2px solid black;
     border-radius: 50%;
+} 
+
+.profile{
+    height: fit-content;
+    border: 1px solid black;
+    width: 100%;
+    padding: 2rem;
+    background-color: whitesmoke;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
+.box {
+    position: relative;
+    min-width: 20%;
+    max-width: 20%;
+    min-height: 200px;
+
+    background: white;
+    border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
+    color: black;
+    box-shadow: 5px 5px rgba(0,0,0,.15);
+    transition: all .4s ease;
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+  .box:hover {
+    border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
+    box-shadow: 10px 10px rgba(0,0,0,.25);
+    background-color:green;
+    color:white;
+  }
+  .stats{
+      display:flex;
+      width: fit-content;
+  }
+  .bio-section{
+      display:flex;
+      width:fit-content;
+  } 

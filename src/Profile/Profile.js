@@ -9,6 +9,19 @@ function Profile({ email, userInfo }) {
     const [bio, setBio] = useState(`Hi, my name is ${userInfo.displayName}`)
     const [wins, setWins] = useState(0)
     const [totalGames, setTotalGames] = useState(0)
+    const [currentGames, setCurrentGames] = useState(0)
+    const[tempBio, setTempBio] = useState("")
+    const [editBio, setEditBio] = useState(false)
+
+    function changeBio(){
+        setEditBio(!editBio);
+    }
+
+    function saveBio(){
+        setEditBio(!editBio);
+        setBio(tempBio)
+
+    }
 
     useEffect(() => {
         var docRef = db.collection("users").doc(email);
@@ -31,12 +44,34 @@ function Profile({ email, userInfo }) {
     }, [])
 
     return (
-        <div style = {{border: "1px solid black", width: "fit-content", padding: "2rem"}}>
+        <div className="profile">
             <h3>{name}</h3>
-            <img className="profile-pic" src={userInfo.photoURL} alt="Profile Pic" />
-            <h3>Bio: {bio}</h3>
-            <h3>Wins: {wins}</h3>
-            <h3>Games Played: {totalGames}</h3>    
+            <img className="profile-pic" src={userInfo.photoURL} alt="Profile Pic" /> 
+
+            {editBio ? (
+                <div> 
+                    <textarea
+                        type="text" 
+                        defaultValue={bio}
+                        onChange={(e) => setTempBio(e.target.value)}
+                    />
+
+                    <button onClick={saveBio}>OK</button>
+                    <button onClick={changeBio}>X</button>
+                </div>
+            ) 
+            : (
+                <div className="bio-section">
+                    <h3>{bio}</h3> 
+                    <div onClick={changeBio}>Edit</div>
+                </div>
+            )}      
+
+            <div className = "stats">
+                <div className="box"><span>Wins: <h1>{wins}</h1></span></div>
+                <div className="box" ><span>Games Played: <h1>{totalGames}</h1></span></div>  
+                <div className="box" ><span>Current Games: <h1>{currentGames}</h1></span></div>    
+            </div>
         </div>
     )
 }
