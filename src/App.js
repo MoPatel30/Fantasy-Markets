@@ -22,7 +22,7 @@ function App({ username, userInfo }) {
             <div id="blurry-filter"></div>
             <header>
             <div>
-              <article id="title"><span className="parent" style={{color: "red"}}>Fantasy</span><br/><span className="name" style={{color: "blue"}}>Markets</span></article>
+              <article id="title"><span className="parent" style={{color: "#DB1F48"}}>Fantasy</span><br/><span className="name" style={{color: "#004369"}}>Markets</span></article>
              
               <Link to="/profile"> 
                 <a>

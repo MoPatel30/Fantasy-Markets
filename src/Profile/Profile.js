@@ -63,7 +63,7 @@ function Profile({ email, userInfo }) {
             : (
                 <div className="bio-section">
                     <h3>{bio}</h3> 
-                    <div onClick={changeBio}>Edit</div>
+                    <button onClick={changeBio}>Edit</button>
                 </div>
             )}      
 

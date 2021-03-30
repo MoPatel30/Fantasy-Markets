@@ -22,9 +22,9 @@
     max-width: 20%;
     min-height: 200px;
 
-    background: white;
+    background: #DB1F48;
     border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
-    color: black;
+    color: white;
     box-shadow: 5px 5px rgba(0,0,0,.15);
     transition: all .4s ease;
     padding-left: 19px;
@@ -33,7 +33,7 @@
   .box:hover {
     border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
     box-shadow: 10px 10px rgba(0,0,0,.25);
-    background-color:green;
+    background-color:#01949A;
     color:white;
   }
   .stats{

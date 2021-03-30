@@ -3,12 +3,28 @@ import "./FindGames.css"
 import { db } from "../firebase"
 import store from "../Redux/index"
 import firebase from "firebase"
+import GameModal from "../GameModal/GameModal"
+import IconButton from '@material-ui/core/IconButton';
+//import CloseIcon from '@material-ui/icons/Close';
+import Dialog from '@material-ui/core/Dialog';
+import Toolbar from '@material-ui/core/Toolbar';
+
 
 
 function FindGames() {
     const [games, setGames] = useState([])
-    // var docRef = db.collection("current_games")
+    const [open, setOpen] = useState(false);
+    const [modalGameInfo, setModalGameInfo] = useState(null)
 
+    const handleClickOpen = (instance) => {
+      setOpen(true)
+      setModalGameInfo(instance)
+    }
+  
+    const handleClose = () => {
+      setOpen(false)
+    }
+    
     useEffect(() => {
         db.collection('current_games').onSnapshot(snapshot => {
             setGames(snapshot.docs.map(doc => doc))   
@@ -68,7 +84,7 @@ function FindGames() {
             <div id = "game-style">
                 {games.map((instance) => (
                     <div>
-                        <div className="flip-card">
+                        <div onClick={() => handleClickOpen(instance)} className="flip-card">
                             <div className="flip-card-inner">
                                 <div className="flip-card-front">
                                     <div id="spanner">
@@ -101,16 +117,20 @@ function FindGames() {
 
                                     {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}
                                 </div>
-                                <div className="flip-card-back">                        
-                                    <h1>{instance.data().creator}</h1>
-                                    <p>Add current game lobby</p>
-                                </div>
                             </div>
                         </div>
                     </div>      
                 ))
                 } 
-            </div>   
+            </div>  
+            <Dialog style = {{maxWidth: "100%"}} fullScreen open = {open}>
+                <Toolbar style = {{maxWidth: "90%"}}> 
+                    <IconButton edge="start" color="black" onClick={handleClose} aria-label="close">
+                        <p>Go Back </p>
+                    </IconButton>
+                </Toolbar>
+                <GameModal gameInfo={modalGameInfo} />
+            </Dialog> 
         </div>
     )
 }
