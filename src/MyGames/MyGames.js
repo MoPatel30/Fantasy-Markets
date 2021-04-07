@@ -31,18 +31,15 @@ function MyGames() {
     }, [])
 
     function findMyGamesInfo(){
-        console.log(GameId)
         db.collection('current_games').onSnapshot(snapshot => {
-            setMyGames(snapshot.docs.map(doc => doc))  
-            //snapshot.docs.map(doc => console.log(doc.data())) 
+            setMyGames(snapshot.docs.map(doc => doc.data().id))  
+            snapshot.docs.map(doc => console.log(doc.data())) 
         })
-
-        for(let idx = 0; idx < MyGames.length; idx++){
-            console.log(MyGames[idx].id)
-            console.log(GameId)
-            if(GameId.indexOf(MyGames[idx].id) !== -1){
+        console.log(MyGames)
+        for(let idx = 0; idx < GameId.length; idx++){
+            if(MyGames.indexOf(GameId[idx].id) !== -1){
+                console.log(GameId[idx].id)
                 setShowGames([...showGames, MyGames[idx]])
-                console.log("object")
             }
         }
         console.log(showGames)

@@ -12,7 +12,7 @@
     background-color:#DB1F48;
 }
 
-figure {
+/* figure {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,18 +40,18 @@ figure > figcaption {
     color: #FFF;
     font-size: 1.25em;
     position: relative;
-}
+} */
 
 
 #spanner{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 #non-spanner{
-    text-align: left;
+    text-align: center;
     text-indent: 2%;
 }
 
@@ -61,14 +61,13 @@ figure > figcaption {
 
 
 .flip-card {
+    cursor: pointer;
     background-color: transparent;
-    width: 800px;
-    height: 200px;
+    width: 320px;
+    height: 275px;
     padding: 8px;
-    padding-left:60px;
-    padding-right: 60px;
    /* perspective: 1000px;  Remove this if you don't want the 3D effect */
-  }
+}
   
   /* This container is needed to position the front and back side */
   .flip-card-inner {
