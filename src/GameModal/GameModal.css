@@ -1,0 +1,30 @@
+#game-info{
+    display: inline-block;
+}
+
+#game-info div{
+    margin-bottom: 4rem; 
+}
+
+#game-players{
+    margin-bottom: 4rem;
+}
+
+#leaderboard{
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+#portfolio-btns{
+    float: right;
+}
+
+.edit-portfolio-btn{
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.view-portfolio-btn{
+    margin-right: 1rem;
+    cursor: pointer;
+}

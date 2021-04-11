@@ -5,22 +5,16 @@ import store from "../Redux/index"
 
 
 function MyGames() {
-    const [GameId, setGameId] = useState([])
-    const [MyGames, setMyGames] = useState([])
+    const [MyGameIds, setMyGameIds] = useState([])
+    const [CurrentGames, setCurrentGames] = useState([])
     const [showGames, setShowGames] = useState([])
 
-    useEffect(() => { 
-        // db.collection('users').doc(store.getState().email).onSnapshot(snapshot => {
-        //     //console.log(snapshot)
-        //     //setGameId(snapshot.docs.map(doc => doc.data().current_games))   
-        //     snapshot.docs.map(doc => console.log(doc.data()))
-        //     findMyGamesInfo()
-        // })
-        db.collection('users').doc(store.getState().email).get().then((doc) => {
+    async function getMyGames(){
+        await db.collection('users').doc(store.getState().email).get().then((doc) => {
             if(doc.exists){
-                setGameId(doc.data().current_games)
-                console.log("Document data:", doc.data())
-                findMyGamesInfo()  
+                setMyGameIds(doc.data().current_games)
+                console.log("Document data:", doc.data()) 
+                console.log(MyGameIds) 
             } 
             else{
                  console.log("No such document!")
@@ -28,21 +22,71 @@ function MyGames() {
             }).catch((error) => {
                 console.log("Error getting document:", error)
             })
+    }
+
+    useEffect(() => { 
+        getMyGames().then(() => {
+            console.log(MyGameIds)
+            if(MyGameIds.length > 0){
+                db.collection("current_games")
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            if(MyGameIds.indexOf(doc.id) !== -1){
+                                console.log(doc.id)
+                                let temp = showGames
+                                temp.push(doc)
+                                setShowGames(temp)
+                            }
+                        })
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error)
+                    })  
+            }
+            else{
+                console.log("fuck")
+            }
+        })
+            // if(isMounted){
+            //     findMyGamesInfo()
+            // }
+        
+        //return () => {isMounted = false}
+       
+        // })
+        // db.collection('users').doc(store.getState().email).get().then((doc) => {
+        //     if(doc.exists){
+        //         setMyGameIds(doc.data().current_games)
+        //         console.log("Document data:", doc.data())
+        //         db.collection("current_games")
+        //             .get()
+        //             .then((querySnapshot) => {
+        //                 querySnapshot.forEach((doc) => {
+        //                     setCurrentGames(...CurrentGames, doc)
+        //                     console.log(doc.id, " => ", doc.data())
+        //                 })
+        //             })
+        //             .catch((error) => {
+        //                 console.log("Error getting documents: ", error)
+        //             })  
+        //     } 
+        //     else{
+        //          console.log("No such document!")
+        //     }
+        //     }).catch((error) => {
+        //         console.log("Error getting document:", error)
+        //     })
     }, [])
 
     function findMyGamesInfo(){
-        db.collection('current_games').onSnapshot(snapshot => {
-            setMyGames(snapshot.docs.map(doc => doc.data().id))  
-            snapshot.docs.map(doc => console.log(doc.data())) 
-        })
-        console.log(MyGames)
-        for(let idx = 0; idx < GameId.length; idx++){
-            if(MyGames.indexOf(GameId[idx].id) !== -1){
-                console.log(GameId[idx].id)
-                setShowGames([...showGames, MyGames[idx]])
+        console.log(MyGameIds)
+        CurrentGames.forEach((doc) => {
+            if(MyGameIds.indexOf(doc.id) !== -1){
+                console.log(doc.id)
+                setShowGames([...showGames, doc])
             }
-        }
-        console.log(showGames)
+        })
     }
 
     return (
