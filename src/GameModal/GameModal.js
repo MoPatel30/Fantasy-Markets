@@ -21,26 +21,26 @@ function GameModal({ gameInfo }) {
 
     return (
         <div>
-            <h1><u>Name: {gameInfo.data().name}</u></h1>
-            <h1><u>Creator: {gameInfo.data().creator}</u></h1>
+            <h1><u>Name: {gameInfo.name}</u></h1>
+            <h1><u>Creator: {gameInfo.creator}</u></h1>
             
-            <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>
-            <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
+            <h3>Starting Amount: {gameInfo.starting_amount} USD</h3>
+            <h3>Duration: {gameInfo.duration - 1} {gameInfo.duration - 1 === 1 ? `week`: `weeks`}</h3>
          
-            <h3>Start date: {gameInfo.data().start_date}</h3>
-            <h3>End date: {gameInfo.data().end_date}</h3>
+            <h3>Start date: {gameInfo.start_date}</h3>
+            <h3>End date: {gameInfo.end_date}</h3>
                                
-            <h3>Players: {gameInfo.data().player_count} / {gameInfo.data().max_players}</h3>
+            <h3>Players: {gameInfo.player_count} / {gameInfo.max_players}</h3>
 
-            {gameInfo.data().player_count < gameInfo.data().max_players ? (
+            {gameInfo.player_count < gameInfo.max_players ? (
                 <button value={`${gameInfo.id}`} onClick={joinGameSession}>Join</button>
             ): (
                 <p></p>
             )
             }
-            {gameInfo.data().players ? (
-                console.log(gameInfo.data().players),
-                gameInfo.data().players.map((player) => (
+            {gameInfo.players ? (
+                console.log(gameInfo.players),
+                gameInfo.players.map((player) => (
                     <div>
                         <span>{Object.keys(player)[0]}</span>
                         <span>${player[Object.keys(player)[0]].cash} USD</span>
