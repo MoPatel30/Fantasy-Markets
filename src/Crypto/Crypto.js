@@ -1,7 +1,7 @@
 import React, {useState, useEffect, prevState} from 'react'
 import "./Crypto.css"
 const rp = require('request-promise');
-
+// uri: 'https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
 
 
 function Crypto({portfolio}) {
@@ -17,12 +17,18 @@ function Crypto({portfolio}) {
             },
             
             headers: {
-              'X-CMC_PRO_API_KEY': ''
+              'X-CMC_PRO_API_KEY': ""
             },
             json: true,
             gzip: true
           };
           
+   
+    
+    
+    
+    
+    
           rp(requestOptions).then(response => {
             console.log('API call response:', response)
             setPrice(String(response.data[Object.keys(response.data)[0]].quote.USD.price))
@@ -47,9 +53,9 @@ function Crypto({portfolio}) {
             {Object.keys(portfolio).map(currency => (
                 <div>
                     <div className = "coin-info">
-                        <p>Name: {currency}</p>
-                        <p>Amount Invested: {portfolio[currency]} USD</p>
-                        <p>Current position: {getCoinInfo(currency, portfolio[currency])} {currency}</p>
+                        <p className="item">Name: {currency}</p>
+                        <p className="item">Amount Invested: ${portfolio[currency]} USD</p>
+                        <p className="item">Current position: <strong>{getCoinInfo(currency, portfolio[currency])} {currency}</strong></p>
                     </div>
                    
                 </div>
