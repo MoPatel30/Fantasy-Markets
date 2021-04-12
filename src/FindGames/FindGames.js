@@ -13,8 +13,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function FindGames() {
     const [games, setGames] = useState([])
+    const [filteredGame, setFilteredGame] = useState([])
+
     const [open, setOpen] = useState(false);
     const [modalGameInfo, setModalGameInfo] = useState(null)
+    const [search, setSearch] = useState("");
+
+    var gameArr = [];
 
     const handleClickOpen = (instance) => {
       setOpen(true)
@@ -24,11 +29,13 @@ function FindGames() {
     const handleClose = () => {
       setOpen(false)
     }
+
+    
     
     useEffect(() => {
-        db.collection('current_games').onSnapshot(snapshot => {
-            setGames(snapshot.docs.map(doc => doc))   
-            snapshot.docs.map(doc => console.log(doc.id))   
+        db.collection('current_games').onSnapshot(snapshot => {          
+            setGames(snapshot.docs.map(doc => doc))  
+            //snapshot.docs.map(doc => gameNames.push(doc.data().name)) 
         })
 
         // docRef.get().then((doc) => {
@@ -66,12 +73,28 @@ function FindGames() {
         //         console.log("Error: ", err)
         //     })
     }, [])
-
+    
+    useEffect(() => {
+        setFilteredGame(
+          games.filter((game) =>
+            game.data().name.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }, [search, games]);
 
     return (
         <div>
             <div id = "game-style">
-                {games.map((instance) => (
+                <div className="searchbar">
+                    <input
+                        type="text"
+                        placeholder="Search for a Game"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <i className="fas fa-search" id="searchGlass"></i>
+                </div>
+
+                {filteredGame.map((instance) => (
                     <div>
                         <div onClick={() => handleClickOpen(instance)} className="flip-card">
                             <div className="flip-card-inner">
@@ -104,6 +127,7 @@ function FindGames() {
                 ))
                 } 
             </div>  
+
             <Dialog style = {{maxWidth: "100%"}} fullScreen open = {open}>
                 <Toolbar style = {{maxWidth: "90%"}}> 
                     <IconButton edge="start" color="black" onClick={handleClose} aria-label="close">

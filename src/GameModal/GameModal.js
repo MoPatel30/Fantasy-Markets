@@ -15,11 +15,11 @@ function GameModal({ gameInfo }) {
 
     function joinGameSession(e){
         e.preventDefault()
-        
+
         if(players.indexOf(store.getState().email) === -1){
             db.collection("current_games").doc(e.target.value).update({
                 player_count: firebase.firestore.FieldValue.increment(1),
-                players: firebase.firestore.FieldValue.arrayUnion( {[store.getState().email]: {cash: "6696"}} )  
+                players: firebase.firestore.FieldValue.arrayUnion( {[store.getState().email]: {cash: gameInfo.data().starting_amount}} )  
             })
             db.collection("users").doc(`${store.getState().userInfo.email}`).update({
                 current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
@@ -53,7 +53,7 @@ function GameModal({ gameInfo }) {
          
             {gameInfo.data().player_count < gameInfo.data().max_players ? (
                 <div>
-                    <button value={`${gameInfo.id}`} onClick={joinGameSession}>Join</button> 
+                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Join</button> 
                 </div>
             ): (
                 <p></p>

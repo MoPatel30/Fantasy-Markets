@@ -29,7 +29,7 @@ function CreateGame() {
             end_date: new Date(Date.now() + 12096e5).toString(),
             max_players: data[3],
             player_count: 1,
-            players: firebase.firestore.FieldValue.arrayUnion( {[create]: {cash: data[1]}} ),
+            players: firebase.firestore.FieldValue.arrayUnion( {[create]: {cash: Number(data[1])}} ),
             // players: {[create]: {cash: data[1]}}
         })
         .then((doc) => {
