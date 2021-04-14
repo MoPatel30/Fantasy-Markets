@@ -25,29 +25,29 @@ function MyGames() {
     }
 
     useEffect(() => { 
-        getMyGames().then(() => {
-            console.log(MyGameIds)
-            if(MyGameIds.length > 0){
-                db.collection("current_games")
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            if(MyGameIds.indexOf(doc.id) !== -1){
-                                console.log(doc.id)
-                                let temp = showGames
-                                temp.push(doc)
-                                setShowGames(temp)
-                            }
-                        })
-                    })
-                    .catch((error) => {
-                        console.log("Error getting documents: ", error)
-                    })  
-            }
-            else{
-                console.log("fuck")
-            }
-        })
+        // getMyGames().then(() => {
+        //     console.log(MyGameIds)
+        //     if(MyGameIds.length > 0){
+        //         db.collection("current_games")
+        //             .get()
+        //             .then((querySnapshot) => {
+        //                 querySnapshot.forEach((doc) => {
+        //                     if(MyGameIds.indexOf(doc.id) !== -1){
+        //                         console.log(doc.id)
+        //                         let temp = showGames
+        //                         temp.push(doc)
+        //                         setShowGames(temp)
+        //                     }
+        //                 })
+        //             })
+        //             .catch((error) => {
+        //                 console.log("Error getting documents: ", error)
+        //             })  
+        //     }
+        //     else{
+        //         console.log("fuck")
+        //     }
+        // })
             // if(isMounted){
             //     findMyGamesInfo()
             // }
@@ -55,28 +55,34 @@ function MyGames() {
         //return () => {isMounted = false}
        
         // })
-        // db.collection('users').doc(store.getState().email).get().then((doc) => {
-        //     if(doc.exists){
-        //         setMyGameIds(doc.data().current_games)
-        //         console.log("Document data:", doc.data())
-        //         db.collection("current_games")
-        //             .get()
-        //             .then((querySnapshot) => {
-        //                 querySnapshot.forEach((doc) => {
-        //                     setCurrentGames(...CurrentGames, doc)
-        //                     console.log(doc.id, " => ", doc.data())
-        //                 })
-        //             })
-        //             .catch((error) => {
-        //                 console.log("Error getting documents: ", error)
-        //             })  
-        //     } 
-        //     else{
-        //          console.log("No such document!")
-        //     }
-        //     }).catch((error) => {
-        //         console.log("Error getting document:", error)
-        //     })
+        db.collection('users').doc(store.getState().email).get().then((doc) => {
+            if(doc.exists){
+                setMyGameIds(doc.data().current_games)
+                console.log("Document data:", doc.data())
+                db.collection("current_games")
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            setCurrentGames(...CurrentGames, doc)
+                            console.log(doc.id, " => ", doc.data())
+                        })
+                        CurrentGames.forEach((doc) => {
+                            if(MyGameIds.indexOf(doc.id) !== -1){
+                                console.log(doc.id)
+                                setShowGames([...showGames, doc])
+                            }
+                        })
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error)
+                    })  
+            } 
+            else{
+                 console.log("No such document!")
+            }
+            }).catch((error) => {
+                console.log("Error getting document:", error)
+            })
     }, [])
 
     function findMyGamesInfo(){
@@ -91,21 +97,25 @@ function MyGames() {
 
     return (
         <div>
-            {showGames.map((instance) => (
-                <div className="game-style">
-                    <h1>Name: {instance.data().name}</h1>
-                    <h1>creator: {instance.data().creator}</h1>
-                    
-                    <h2>Players: 1 / {instance.data().max_players}</h2>
-                    <h2>Starting Amount: {instance.data().starting_amount}</h2>
-            
-                    <h3>Duration: {instance.data().duration - 1} weeks</h3>
-                    <h3>Start date: {instance.data().start_date}</h3>
-                    <h3>End date: {instance.data().end_date}</h3>
-                    <h3>{instance.id}</h3>
-                </div>
-            ))
-         }     
+            {showGames ? (
+                showGames.map((instance) => (
+                    <div className="game-style">
+                        <h1>Name: {instance.data().name}</h1>
+                        <h1>creator: {instance.data().creator}</h1>
+                        
+                        <h2>Players: 1 / {instance.data().max_players}</h2>
+                        <h2>Starting Amount: {instance.data().starting_amount}</h2>
+                
+                        <h3>Duration: {instance.data().duration - 1} weeks</h3>
+                        <h3>Start date: {instance.data().start_date}</h3>
+                        <h3>End date: {instance.data().end_date}</h3>
+                        <h3>{instance.id}</h3>
+                    </div>
+                ))
+                ) : (
+                    <p>Loading games...</p>
+                )
+            }    
         </div>
     )
 }

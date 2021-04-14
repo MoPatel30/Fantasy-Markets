@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import "./Investor.css"
-import Portfolio from "../Portfolio/Portfolio"
+import EditPortfolio from "../Portfolio/Portfolio"
 
 
 
@@ -22,7 +22,7 @@ function Investor() {
             
             {investors.map(investor => (
                 <div>
-                    <Portfolio name = {investor} />
+                    <EditPortfolio name = {investor} />
                 </div>
             ))
             }

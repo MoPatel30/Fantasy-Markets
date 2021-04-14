@@ -7,7 +7,7 @@ import firebase from "firebase"
 
 function CreateGame() {
     const docRef = db.collection("current_games")
-    const create = store.getState().userInfo.email
+    const create = store.getState().username
     const userRef = db.collection("users")
 
     function createGame(e){
@@ -29,8 +29,8 @@ function CreateGame() {
             end_date: new Date(Date.now() + 12096e5).toString(),
             max_players: data[3],
             player_count: 1,
-            players: firebase.firestore.FieldValue.arrayUnion( {[create]: {cash: Number(data[1])}} ),
-            // players: {[create]: {cash: data[1]}}
+            [create]: {"cash": Number(data[1]), "canEdit": true},
+            players: [create]
         })
         .then((doc) => {
             console.log("Document successfully written!", doc.id)

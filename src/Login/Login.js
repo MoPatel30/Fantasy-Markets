@@ -18,15 +18,19 @@ export const Login = (props) => {
                 .then((result) =>{
                     console.log(result)  
                     updateUserInfo(result.user.displayName, result)
+
+                    let username = result.user.email.split("@")[0]
+                    console.log(username)
+                    
                     store.dispatch({     // store user info in global state 
                         type: "ADD_POST",
                         payload: {
-                            username: result.user.displayName,
+                            username: username,
                             email: result.user.email,
                             userInfo: result.user,
                         } 
                     }) 
-                    setName(result.user.displayName)
+                    setName(username)
                     
                     var docRef = db.collection("users").doc(result.user.email);
                     // check if user credentials already exist. add new user data if they don't.
@@ -36,9 +40,8 @@ export const Login = (props) => {
                         } else {
                             // doc.data() will be undefined in this case
                             console.log("No such document!");
-                            db.collection("users").doc(result.user.email).set({
-                                name: result.user.displayName,
-                                display_name: result.user.displayName,
+                            db.collection("users").doc(username).set({
+                                display_name: username,
                                 bio: `Hi, my name is ${result.user.displayName}!`,
                                 wins: 0,
                                 current_games: [],

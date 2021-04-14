@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { db } from "../firebase"
 import {connect} from "react-redux"
 import "./Profile.css"
+import store from '../Redux/index'
 
 
 function Profile({ email, userInfo }) {
-    const [name, setName] = useState(userInfo.displayName)
+    const username = store.getState().username
+    const [name, setName] = useState(username)
     const [bio, setBio] = useState(`Hi, my name is ${userInfo.displayName}`)
     const [wins, setWins] = useState(0)
     const [totalGames, setTotalGames] = useState(0)
@@ -24,12 +26,12 @@ function Profile({ email, userInfo }) {
     }
 
     useEffect(() => {
-        var docRef = db.collection("users").doc(email);
+        var docRef = db.collection("users").doc(username);
 
         docRef.get().then((doc) => {
             if (doc.exists) {
                 console.log("Document data:", doc.data());
-                setName(doc.data().name)
+                setName(doc.data().display_name)
                 setBio(doc.data().bio)
                 setWins(doc.data().wins)
                 setTotalGames(doc.data().previous_games.length)

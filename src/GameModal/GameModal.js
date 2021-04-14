@@ -3,32 +3,55 @@ import firebase from "firebase"
 import { db } from "../firebase"
 import store from "../Redux/index"
 import "./GameModal.css"
-import Portfolio from "../Portfolio/Portfolio"
+import EditPortfolio, { ViewPortfolio } from "../Portfolio/Portfolio"
 
 function GameModal({ gameInfo }) {
-    const [EditPortfolio, setEditPortfolio] = useState()
+    const [Portfolio, setPortfolio] = useState()
     const [players, setPlayers] = useState([])
+    const [Tokens, setTokens] = useState([])
 
     useEffect(() => {
-        gameInfo.data().players.forEach((player) => {setPlayers([...players, Object.keys(player)[0]])})
+        gameInfo.data().players.forEach((player) => {setPlayers([...players, player])})
     }, [])
 
     function joinGameSession(e){
         e.preventDefault()
-
-        if(players.indexOf(store.getState().email) === -1){
+        if(!gameInfo.data()[store.getState().username]){
             db.collection("current_games").doc(e.target.value).update({
                 player_count: firebase.firestore.FieldValue.increment(1),
-                players: firebase.firestore.FieldValue.arrayUnion( {[store.getState().email]: {cash: gameInfo.data().starting_amount}} )  
-            })
-            db.collection("users").doc(`${store.getState().userInfo.email}`).update({
+                [store.getState().username]: {cash: Number(gameInfo.data().starting_amount), canEdit: true},
+                players: firebase.firestore.FieldValue.arrayUnion( store.getState().username )
+            })  
+            db.collection("users").doc(store.getState().username).update({
                 current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
             })
         }
+
+        // if(players.indexOf(store.getState().email) === -1){
+        //     db.collection("current_games").doc(e.target.value).update({
+        //         player_count: firebase.firestore.FieldValue.increment(1),
+        //         players: firebase.firestore.FieldValue.arrayUnion( {[store.getState().email]: {cash: gameInfo.data().starting_amount}} )  
+        //     })
+        //     db.collection("users").doc(`${store.getState().userInfo.email}`).update({
+        //         current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
+        //     })
+        // }
     }
 
-    function displayPortfolio(email){
-        setEditPortfolio(<Portfolio name={email} />)
+    function displayEditPortfolio(username, portfolio){
+        setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
+    }
+
+    function displayViewPortfolio(username, portfolio){
+
+        setTokens(
+            Object.keys(portfolio).map((coin) => ( coin ))     
+        )
+
+        setTimeout(() => {}, 2000)
+
+        console.log(Tokens)
+        setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} />)
     }
 
     return (
@@ -63,18 +86,18 @@ function GameModal({ gameInfo }) {
             <div id="game-players">
                 <h2>Current Players:</h2>
                 {gameInfo.data().players ? (
-                    console.log(gameInfo.data().players),
+                    console.log(gameInfo.data().mopatel1214),
                     gameInfo.data().players.map((player) => (
                         <div id="leaderboard">
-                            <span>{Object.keys(player)[0]}</span>
+                            <span>{player}</span>
                             <span id="portfolio-btns">
-                                {store.getState().email === Object.keys(player)[0] ? (
+                                {store.getState().username === player && gameInfo.data()[player]["canEdit"] ? (
                                     <span>
-                                        <span onClick={() => {displayPortfolio(Object.keys(player)[0])}} className="edit-portfolio-btn"><u>Edit Portfolio</u></span>
-                                        <span className="view-portfolio-btn"><u>View Portfolio</u></span>
+                                        <span onClick={() => {displayEditPortfolio(player, gameInfo.data()[player])}} className="edit-portfolio-btn"><u>Edit Portfolio</u></span>
+                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player])}} className="view-portfolio-btn"><u>View Portfolio</u></span>
                                     </span>
                                     ) : (
-                                        <span className="view-portfolio-btn"><u>View Portfolio</u></span>
+                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player])}} className="view-portfolio-btn"><u>View Portfolio</u></span>
                                     )
                                 }
                             </span>            
@@ -95,7 +118,7 @@ function GameModal({ gameInfo }) {
                 <h3>5.) Rule #5</h3>
             </div>
 
-            <div>{EditPortfolio}</div>
+            <div>{Portfolio}</div>
         </div>
     )
 }

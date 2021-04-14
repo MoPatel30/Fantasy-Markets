@@ -28,6 +28,7 @@ button {
     border: 1px solid grey;
     background-color: rgb(255, 103, 103);
     color: white;
+    border-radius: 15px;
     font-weight: 900;
 }
 
@@ -36,5 +37,11 @@ button:hover{
 }
 
 input {
-    border: 1px solid grey;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+input + input{
+    margin-left: 1%;
 }

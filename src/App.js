@@ -11,6 +11,7 @@ import FindGames from "./FindGames/FindGames"
 import MyGames from "./MyGames/MyGames"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Test from "./test/test"
+import Portfolio from './Portfolio/Portfolio'
 
 
 function App({ username, userInfo }) {
@@ -50,8 +51,6 @@ function App({ username, userInfo }) {
 
             </header>
 
-            {/* <Investor /> */}
-   
         </div>
         </Router>
       ):(
