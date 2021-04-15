@@ -62,21 +62,28 @@ function GameModal({ gameInfo }) {
                     <h3>Created by {gameInfo.data().creator}</h3>
                 </div>
         
-                <div>
+                <div className = "game-information">
                     <h2><u>Game Information:</u></h2>
                     <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>
+                    <br/>
+                    <br/>
+                    <h3 id= "number">{gameInfo.data().player_count} / {gameInfo.data().max_players} <br /> Players</h3>
+                    <br/>
+                    <br />
+
                     <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
-                
-                    <h3>Start date: {gameInfo.data().start_date}</h3>
-                    <h3>End date: {gameInfo.data().end_date}</h3>
+                    <br/>
+                    <h3>Start date:<br/>{gameInfo.data().start_date.substring(0,16)}</h3>
+                    <br/>
+                    <h3>End date: <br/>{gameInfo.data().end_date.substring(0,16)}</h3>
                                     
-                    <h3>Players: {gameInfo.data().player_count} / {gameInfo.data().max_players}</h3>
+                    
                 </div>
             </div>
          
             {gameInfo.data().player_count < gameInfo.data().max_players ? (
                 <div>
-                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Join</button> 
+                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Enter Game</button> 
                 </div>
             ): (
                 <p></p>
@@ -109,7 +116,7 @@ function GameModal({ gameInfo }) {
                 }
                 </div>
 
-            <div>
+            <div className = "rules">
                 <h1>General Rules</h1>
                 <h3>1.) Rule #1</h3>
                 <h3>2.) Rule #2</h3>

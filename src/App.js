@@ -23,8 +23,17 @@ function App({ username, userInfo }) {
             <div id="blurry-filter"></div>
             <header>
             <div>
-              <article id="title"><span className="parent" style={{color: "#DB1F48"}}>Fantasy</span><br/><span className="name" style={{color: "#004369"}}>Markets</span></article>
+              <article id="title"><span className="parent" style={{color: "white"}}>Fantasy </span><span className="name" style={{color: "#4089F6"}}>Markets</span></article>
              
+              <nav>
+              <ul id = "folders">
+                <li><Link to="/find">Find a Game</Link></li>
+                <li><Link to="/games">My Games</Link></li>
+                <li><Link to="/create">Create Game</Link></li>
+              </ul>
+              </nav>
+              
+              
               <Link to="/profile"> 
                 <a>
                   <img className="home-pro-pic" src={userInfo.photoURL} />
@@ -35,13 +44,7 @@ function App({ username, userInfo }) {
 
             <hr id="header-line" />
 
-              <nav>
-              <ul id = "folders">
-                <li><Link to="/find">Find a Game</Link></li>
-                <li><Link to="/games">My Games</Link></li>
-                <li><Link to="/create">Create Game</Link></li>
-              </ul>
-              </nav>
+            </header>
   
               <Route path="/" />
               <Route path="/find"  component={FindGames} />
@@ -49,7 +52,7 @@ function App({ username, userInfo }) {
               <Route path="/create"  component={CreateGame} />
               <Route path="/profile"  component={Profile} />
 
-            </header>
+           
 
         </div>
         </Router>
