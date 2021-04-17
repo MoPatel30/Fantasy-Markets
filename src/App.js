@@ -23,8 +23,10 @@ function App({ username, userInfo }) {
             <div id="blurry-filter"></div>
             <header>
             <div>
-              <article id="title"><span className="parent" style={{color: "white"}}>Fantasy </span><span className="name" style={{color: "#4089F6"}}>Markets</span></article>
-             
+              <article id="title"><span className="parent" style={{color: "white"}}>Fantasy </span><span className="name" style={{color: "#4089F6"}}>Markets</span><br/>
+              <span style={{color: "white"}}>Strategize, Invest, and take your portfolio <em>to the moon!</em></span>
+              </article>
+              
               <nav>
               <ul id = "folders">
                 <li><Link to="/find">Find a Game</Link></li>

@@ -47,7 +47,7 @@ li a{
   margin-bottom: 2rem;
 }
 #folders > li {
-  background-color: greenyellow;
+  background-color:  rgb(255, 103, 103);
   width: 90%;
   height: 3rem;
   border-radius: 1rem;
@@ -57,7 +57,7 @@ li a{
 #folders > li:hover {
   box-shadow: 0 16px 16px -4px rgba(0, 0, 0, 0.1);
   transform: scale(1.02);
-  background-color: green;
+  background-color:  rgb(255, 50, 50);
 
 }
 
@@ -78,9 +78,9 @@ li a{
 }
 
 .home-pro-pic{
-  border: 2px solid black;
+  border: 2px solid whitesmoke;
   border-radius: 50%;
-  width: 75%;
+  width: 80%;
 }
 
 #header-line{
@@ -98,6 +98,6 @@ li a{
 
 @media only screen and (min-width : 1001px) and (max-width: 1439px){
   #header-line{
-    width: 65vw;
+    width: 100%;
   }
 }

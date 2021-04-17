@@ -30,9 +30,10 @@
     padding-bottom: 2rem;
     text-align: center;
 }
+
 .game-information h2{
     
-    background-color: blue;
+    background-color: #4089F6;
 }
 #game-players{
     position: relative;
@@ -69,7 +70,7 @@
 #gameId{
     position: relative;
     left: 60%;
-    background: greenyellow;
+    background:  rgb(255, 103, 103);
     font-size: 2rem;
     bottom: 4rem;
 }

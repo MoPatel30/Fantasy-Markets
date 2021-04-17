@@ -5,10 +5,10 @@
 
 .profile{
     height: fit-content;
-    border: 1px solid black;
+    color:white;
     width: 100%;
     padding: 2rem;
-    background-color: whitesmoke;
+    
     font-size: 2rem;
     display: flex;
     justify-content: center;
@@ -19,10 +19,10 @@
 .box {
     position: relative;
     min-width: 20%;
-    max-width: 20%;
+    max-width: 30%;
     min-height: 200px;
 
-    background: #DB1F48;
+    background: #4089F6;
     border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
     color: white;
     box-shadow: 5px 5px rgba(0,0,0,.15);
@@ -33,12 +33,13 @@
   .box:hover {
     border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
     box-shadow: 10px 10px rgba(0,0,0,.25);
-    background-color:#01949A;
+    background-color:blue;
     color:white;
   }
   .stats{
-      display:flex;
-      width: fit-content;
+    margin-top: 5%;  
+    display:flex;
+    width: fit-content;
   }
   .bio-section{
       display:flex;

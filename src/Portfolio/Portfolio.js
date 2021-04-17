@@ -72,16 +72,17 @@ function EditPortfolio({username, gameId, portfolio}) {
 
     return (
         <div className = "portfolio">           
-            <h1><u className = "title">{username}'s Portfolio</u></h1>
-
+            <h1><u className = "title">Finalize Your Portfolio</u></h1>
             <div className = "add-coin">
                 <p>Coins remaining: {5 - Object.keys(assets).length} </p>
                 <p>Funds remaining: {cash}</p>
-
-                <input type = "text" placeholder = "Full coin name"  onChange = {(e) => setCoinName(e.target.value.toLowerCase())}></input>
-                <input type = "number" placeholder = "Amount in USD" onChange = {(e) => setCoinAmount(e.target.value)}></input>
-                <button type = "submit" onClick = {addCoin}> Add Coin </button>
+                <button className= "addCoinBtn" type = "submit" onClick = {addCoin}> Add Coin </button>
             </div>
+            <div className="inputFields">
+                    <input type = "text" placeholder = "Full coin name(e.g. bitcoin)"  onChange = {(e) => setCoinName(e.target.value.toLowerCase())}></input>
+                    <input type = "number" placeholder = "Amount in USD" onChange = {(e) => setCoinAmount(e.target.value)}></input>
+                    
+                </div>
 
             {/* <Crypto portfolio = {assets} />   */}
 
@@ -95,8 +96,8 @@ function EditPortfolio({username, gameId, portfolio}) {
                 </div> 
             ))
             }   
-
-            <button onClick = {submitPortfolio}>Submit Portfolio</button>
+            <span className="textWarning">Important: You can only finalize your portfolio once! Choose wisely...</span>
+            <button className="submitBtn" onClick = {submitPortfolio}>Submit Portfolio</button>
         </div>
     )
 }
@@ -114,21 +115,29 @@ export function ViewPortfolio({username, portfolio, tokens}){
 
 
     return(
-        <div className = "portfolio">           
+        <div className = "viewPortfolio">           
             <h1><u className = "title">{username}'s Portfolio</u></h1>
             
+            <div className="centerText">
+                Total Account Value<br/>
+                <span className="totalVal">$50,000.00</span>
+            </div>
+            <div className="background-color">
+
             {tokens.map((coin) => (
                 coin !== "canEdit" ? (
-                    <div>
-                        <span>Asset: {coin} </span>
-                        <span> Amount: {portfolio[coin]}</span>
-                    </div>         
+                    
+                        <div className="assets">
+                            <span>{coin} </span>
+                            <span>  ${portfolio[coin]}</span>
+                        </div>     
+                      
                 ) : (
                     <div></div>
                 )
                 ))
             }
-
+            </div>  
         </div>
     )
 }

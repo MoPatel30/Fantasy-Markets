@@ -4,11 +4,16 @@ import { db } from "../firebase"
 import store from "../Redux/index"
 import "./GameModal.css"
 import EditPortfolio, { ViewPortfolio } from "../Portfolio/Portfolio"
+import Dialog from '@material-ui/core/Dialog';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 function GameModal({ gameInfo }) {
     const [Portfolio, setPortfolio] = useState()
     const [players, setPlayers] = useState([])
     const [Tokens, setTokens] = useState([])
+    const [view,setView] = useState(false);
+    const [editPort,setEditPort] = useState(false);
 
     useEffect(() => {
         gameInfo.data().players.forEach((player) => {setPlayers([...players, player])})
@@ -39,11 +44,12 @@ function GameModal({ gameInfo }) {
     }
 
     function displayEditPortfolio(username, portfolio){
+        setEditPort(true);
         setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
     }
 
     function displayViewPortfolio(username, portfolio){
-
+        setView(true);
         setTokens(
             Object.keys(portfolio).map((coin) => ( coin ))     
         )
@@ -52,6 +58,12 @@ function GameModal({ gameInfo }) {
 
         console.log(Tokens)
         setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} />)
+    }
+    const viewClose = () => {
+        setView(false);
+    }
+    const editPortClose = () => {
+        setEditPort(false);
     }
 
     return (
@@ -125,7 +137,21 @@ function GameModal({ gameInfo }) {
                 <h3>5.) Rule #5</h3>
             </div>
 
-            <div>{Portfolio}</div>
+            {/* The Modal for Viewing your Portfolio */}
+            <Dialog fullWidth maxWidth={'sm'} open = {view}>
+                <IconButton edge="start" color="black" onClick={viewClose} aria-label="close">
+                    <p>Close</p>
+                </IconButton>
+                <div>{Portfolio}</div>
+            </Dialog>
+
+                {/* The Modal for Creating Your Portfolio */}
+            <Dialog fullWidth maxWidth={'md'} open = {editPort}>
+                <IconButton edge="start" color="black" onClick={editPortClose} aria-label="close">
+                    <p>Close</p>
+                </IconButton>
+                <div>{Portfolio}</div>
+            </Dialog>
         </div>
     )
 }
