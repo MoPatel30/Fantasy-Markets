@@ -25,7 +25,7 @@ function App({ username, userInfo }) {
             <div>
               <article id="title"><span className="parent" style={{color: "#DB1F48"}}>Fantasy</span><br/><span className="name" style={{color: "#004369"}}>Markets</span></article>
              
-              <Link to="/profile"> 
+              <Link to={`/profile/${username}`}> 
                 <a>
                   <img className="home-pro-pic" src={userInfo.photoURL} />
                 </a>
@@ -47,8 +47,8 @@ function App({ username, userInfo }) {
               <Route path="/find"  component={FindGames} />
               <Route path="/games"  component={MyGames} />
               <Route path="/create"  component={CreateGame} />
-              <Route path="/profile"  component={Profile} />
-
+              <Route path={`/profile/${username}`}  component={Profile} />
+            
             </header>
 
         </div>

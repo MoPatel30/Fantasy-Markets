@@ -32,11 +32,14 @@ function FindGames() {
 
     
     
-    useEffect(() => {
+    useEffect(() => { 
+        let isMounted = true; // note this flag denote mount status
+
         db.collection('current_games').onSnapshot(snapshot => {          
             setGames(snapshot.docs.map(doc => doc))  
             //snapshot.docs.map(doc => gameNames.push(doc.data().name)) 
         })
+        console.log("object")
 
         // docRef.get().then((doc) => {
         //     if (doc.exists) {
@@ -72,14 +75,17 @@ function FindGames() {
         //     .catch((err) => {
         //         console.log("Error: ", err)
         //     })
+        return () => { isMounted = false }; // use effect cleanup to set flag false
     }, [])
     
     useEffect(() => {
+        let isMounted = true; // note this flag denote mount status
         setFilteredGame(
           games.filter((game) =>
             game.data().name.toLowerCase().includes(search.toLowerCase())
           )
         );
+        return () => { isMounted = false }; // use effect cleanup to set flag false
       }, [search, games]);
 
     return (
@@ -94,7 +100,10 @@ function FindGames() {
                     <i className="fas fa-search" id="searchGlass"></i>
                 </div>
 
-                {filteredGame.map((instance) => (
+                {filteredGame.length === 0 ? (
+                    <p>No games found. Head over to "Create a Game" to create a new game session!</p>
+                ) : (
+                filteredGame.map((instance) => (
                     <div>
                         <div onClick={() => handleClickOpen(instance)} className="flip-card">
                             <div className="flip-card-inner">
@@ -116,7 +125,7 @@ function FindGames() {
                                     </div> */}
 
                                     <div id="spanner">                                 
-                                        <h3>Players: {instance.data().player_count} / {instance.data().max_players}</h3>
+                                        <h3>Players: {instance.data().players.length} / {instance.data().max_players}</h3>
                                     </div>
 
                                     {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}
@@ -124,7 +133,7 @@ function FindGames() {
                             </div>
                         </div>
                     </div>      
-                ))
+                )))
                 } 
             </div>  
 

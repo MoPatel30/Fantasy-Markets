@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import "./Login.css"
 import { connect } from 'react-redux'
 import store from ".././Redux/index"
@@ -8,7 +8,6 @@ import firebase from "firebase"
 
 export const Login = (props) => {
     const [userInfo, updateUserInfo] = useState(null)
-    const [name, setName] = useState(store.getState().username)
 
     const signIn = () => {
         auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -21,21 +20,30 @@ export const Login = (props) => {
 
                     let username = result.user.email.split("@")[0]
                     console.log(username)
+
+                    // store.dispatch({     // store user info in global state 
+                    //     type: "ADD_POST",
+                    //     payload: {
+                    //         username: username,
+                    //         email: result.user.email,
+                    //         userInfo: result.user,
+                    //     } 
+                    // }) 
                     
-                    store.dispatch({     // store user info in global state 
-                        type: "ADD_POST",
-                        payload: {
-                            username: username,
-                            email: result.user.email,
-                            userInfo: result.user,
-                        } 
-                    }) 
-                    setName(username)
                     
-                    var docRef = db.collection("users").doc(result.user.email);
+                    var docRef = db.collection("users").doc(username);
                     // check if user credentials already exist. add new user data if they don't.
                     docRef.get().then((doc) => {
                         if (doc.exists) {
+                            store.dispatch({     // store user info in global state 
+                                type: "ADD_POST",
+                                payload: {
+                                    username: username,
+                                    email: result.user.email,
+                                    userInfo: result.user,
+                                    MyGames: doc.data().current_games           
+                                } 
+                            }) 
                             console.log("Document data:", doc.data());
                         } else {
                             // doc.data() will be undefined in this case

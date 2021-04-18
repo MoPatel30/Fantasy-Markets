@@ -5,6 +5,7 @@ const initialState = {
     username: "",
     email: "",
     userInfo: "not logged in",
+    MyGames: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -12,10 +13,15 @@ const reducer = (state = initialState, action) => {
         return Object.assign({}, state, {
             username: action.payload.username,
             email: action.payload.email,
-            userInfo: action.payload.userInfo
+            userInfo: action.payload.userInfo,
+            MyGames: action.payload.MyGames
         })
     }
-
+    if(action.type === "UPDATE_GAMES"){
+        return Object.assign(...state, state, {
+            MyGames: action.payload.MyGames
+        })
+    }
     return state
 }
 

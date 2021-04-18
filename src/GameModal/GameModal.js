@@ -4,6 +4,8 @@ import { db } from "../firebase"
 import store from "../Redux/index"
 import "./GameModal.css"
 import EditPortfolio, { ViewPortfolio } from "../Portfolio/Portfolio"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Profile from "../Profile/Profile"
 
 function GameModal({ gameInfo }) {
     const [Portfolio, setPortfolio] = useState()
@@ -25,6 +27,12 @@ function GameModal({ gameInfo }) {
             db.collection("users").doc(store.getState().username).update({
                 current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
             })
+            store.dispatch({     // store user info in global state 
+                type: "UPDATE_GAMES",
+                payload: {
+                    MyGames: [...store.getState().username, e.target.value]        
+                } 
+            }) 
         }
 
         // if(players.indexOf(store.getState().email) === -1){
@@ -42,8 +50,17 @@ function GameModal({ gameInfo }) {
         setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
     }
 
+    const [dailyCoinPrices, setDailyCoinPrices] = useState({})
     function displayViewPortfolio(username, portfolio){
-
+        db.collection('coin_prices').onSnapshot(snapshot => {  
+            snapshot.docs.map(doc => (
+                //console.log(doc.id)
+                //console.log(doc.data().value)
+                //setAssets({...assets, [name]: Number(convertedPrice)}) 
+                setDailyCoinPrices({...dailyCoinPrices, [doc.id] : Number(doc.data().value)})  
+            )) 
+        })     
+   
         setTokens(
             Object.keys(portfolio).map((coin) => ( coin ))     
         )
@@ -89,7 +106,9 @@ function GameModal({ gameInfo }) {
                     console.log(gameInfo.data().mopatel1214),
                     gameInfo.data().players.map((player) => (
                         <div id="leaderboard">
+                                                    
                             <span>{player}</span>
+                           
                             <span id="portfolio-btns">
                                 {store.getState().username === player && gameInfo.data()[player]["canEdit"] ? (
                                     <span>
@@ -120,6 +139,7 @@ function GameModal({ gameInfo }) {
 
             <div>{Portfolio}</div>
         </div>
+      
     )
 }
 
