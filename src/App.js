@@ -22,38 +22,38 @@ function App({ username, userInfo }) {
           <div>
             <div id="blurry-filter"></div>
             <header>
-            <div>
-              <article id="title"><span className="parent" style={{color: "#DB1F48"}}>Fantasy</span><br/><span className="name" style={{color: "#004369"}}>Markets</span></article>
-             
-              <Link to={`/profile/${username}`}> 
-                <a>
-                  <img className="home-pro-pic" src={userInfo.photoURL} />
-                </a>
-              </Link>
-              
-            </div>
+              <div>
+                <article id="title"><span className="parent" style={{color: "white"}}>Fantasy </span><span className="name" style={{color: "#4089F6"}}>Markets</span><br/>
+                  <span style={{color: "white"}}>Strategize, Invest, and take your portfolio <em>to the moon!</em></span>
+                </article>
+                
+                <nav>
+                  <ul id = "folders">
+                    <li><Link to="/find">Find a Game</Link></li>
+                    <li><Link to="/games">My Games</Link></li>
+                    <li><Link to="/create">Create Game</Link></li>
+                  </ul>
+                </nav>
+                
+                <Link to="/profile"> 
+                  <a>
+                    <img className="home-pro-pic" src={userInfo.photoURL} />
+                  </a>
+                </Link>    
+              </div>
 
-            <hr id="header-line" />
-
-              <nav>
-              <ul id = "folders">
-                <li><Link to="/find">Find a Game</Link></li>
-                <li><Link to="/games">My Games</Link></li>
-                <li><Link to="/create">Create Game</Link></li>
-              </ul>
-              </nav>
-  
-              <Route path="/" />
-              <Route path="/find"  component={FindGames} />
-              <Route path="/games"  component={MyGames} />
-              <Route path="/create"  component={CreateGame} />
-              <Route path={`/profile/${username}`}  component={Profile} />
-            
+              <hr id="header-line" />
             </header>
 
-        </div>
+            <Route path="/" />
+            <Route path="/find"  component={FindGames} />
+            <Route path="/games"  component={MyGames} />
+            <Route path="/create"  component={CreateGame} />
+            <Route path="/profile"  component={Profile} />      
+
+          </div>
         </Router>
-      ):(
+      ) : (
         <div>
           <Login />
         </div>
