@@ -84,8 +84,7 @@ function FindGames() {
 
     return (
         <div>
-            <div id = "game-style">
-                <div className="searchbar">
+            <div className="searchbar">
                     <input
                         type="text"
                         placeholder="Search for a Game"
@@ -93,21 +92,27 @@ function FindGames() {
                     />
                     <i className="fas fa-search" id="searchGlass"></i>
                 </div>
+            <div id = "game-style">
+                
 
                 {filteredGame.map((instance) => (
                     <div>
                         <div onClick={() => handleClickOpen(instance)} className="flip-card">
-                            <div className="flip-card-inner">
-                                <div className="flip-card-front">
+                            
+                               
                                    
                                     <div id="spanner">
                                         <h2><u>{instance.data().name}</u></h2>
+                                        <h3>Created By: {instance.data().creator}</h3>
                                     </div>
-
+                                    <br />
+                                    <div id="Midspanner">                                 
+                                        <h3>{instance.data().player_count} / {instance.data().max_players} <br /> Players</h3>
+                                    </div>
+                                    <br />
                                     <div id="non-spanner">
                                         <h3>Starting Amount: {instance.data().starting_amount} USD</h3>
-                                        <h3>Duration: {instance.data().duration - 1} {instance.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
-                                        <h3>Start date: {instance.data().start_date}</h3>
+                                        <h3>Start date: {instance.data().start_date.substring(0,16)}</h3>
                                     </div>
                             
                                     {/* <div id="non-spanner">
@@ -115,13 +120,11 @@ function FindGames() {
                                         <h3>End date: {instance.data().end_date}</h3>
                                     </div> */}
 
-                                    <div id="spanner">                                 
-                                        <h3>Players: {instance.data().player_count} / {instance.data().max_players}</h3>
-                                    </div>
+                                    
 
                                     {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}
-                                </div>
-                            </div>
+                                
+                            
                         </div>
                     </div>      
                 ))

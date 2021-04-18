@@ -4,11 +4,16 @@ import { db } from "../firebase"
 import store from "../Redux/index"
 import "./GameModal.css"
 import EditPortfolio, { ViewPortfolio } from "../Portfolio/Portfolio"
+import Dialog from '@material-ui/core/Dialog';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 function GameModal({ gameInfo }) {
     const [Portfolio, setPortfolio] = useState()
     const [players, setPlayers] = useState([])
     const [Tokens, setTokens] = useState([])
+    const [view,setView] = useState(false);
+    const [editPort,setEditPort] = useState(false);
 
     useEffect(() => {
         gameInfo.data().players.forEach((player) => {setPlayers([...players, player])})
@@ -39,11 +44,12 @@ function GameModal({ gameInfo }) {
     }
 
     function displayEditPortfolio(username, portfolio){
+        setEditPort(true);
         setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
     }
 
     function displayViewPortfolio(username, portfolio){
-
+        setView(true);
         setTokens(
             Object.keys(portfolio).map((coin) => ( coin ))     
         )
@@ -52,6 +58,12 @@ function GameModal({ gameInfo }) {
 
         console.log(Tokens)
         setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} />)
+    }
+    const viewClose = () => {
+        setView(false);
+    }
+    const editPortClose = () => {
+        setEditPort(false);
     }
 
     return (
@@ -62,21 +74,28 @@ function GameModal({ gameInfo }) {
                     <h3>Created by {gameInfo.data().creator}</h3>
                 </div>
         
-                <div>
+                <div className = "game-information">
                     <h2><u>Game Information:</u></h2>
                     <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>
+                    <br/>
+                    <br/>
+                    <h3 id= "number">{gameInfo.data().player_count} / {gameInfo.data().max_players} <br /> Players</h3>
+                    <br/>
+                    <br />
+
                     <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
-                
-                    <h3>Start date: {gameInfo.data().start_date}</h3>
-                    <h3>End date: {gameInfo.data().end_date}</h3>
+                    <br/>
+                    <h3>Start date:<br/>{gameInfo.data().start_date.substring(0,16)}</h3>
+                    <br/>
+                    <h3>End date: <br/>{gameInfo.data().end_date.substring(0,16)}</h3>
                                     
-                    <h3>Players: {gameInfo.data().player_count} / {gameInfo.data().max_players}</h3>
+                    
                 </div>
             </div>
          
             {gameInfo.data().player_count < gameInfo.data().max_players ? (
                 <div>
-                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Join</button> 
+                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Enter Game</button> 
                 </div>
             ): (
                 <p></p>
@@ -109,7 +128,7 @@ function GameModal({ gameInfo }) {
                 }
                 </div>
 
-            <div>
+            <div className = "rules">
                 <h1>General Rules</h1>
                 <h3>1.) Rule #1</h3>
                 <h3>2.) Rule #2</h3>
@@ -118,7 +137,21 @@ function GameModal({ gameInfo }) {
                 <h3>5.) Rule #5</h3>
             </div>
 
-            <div>{Portfolio}</div>
+            {/* The Modal for Viewing your Portfolio */}
+            <Dialog fullWidth maxWidth={'sm'} open = {view}>
+                <IconButton edge="start" color="black" onClick={viewClose} aria-label="close">
+                    <p>Close</p>
+                </IconButton>
+                <div>{Portfolio}</div>
+            </Dialog>
+
+                {/* The Modal for Creating Your Portfolio */}
+            <Dialog fullWidth maxWidth={'md'} open = {editPort}>
+                <IconButton edge="start" color="black" onClick={editPortClose} aria-label="close">
+                    <p>Close</p>
+                </IconButton>
+                <div>{Portfolio}</div>
+            </Dialog>
         </div>
     )
 }

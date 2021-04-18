@@ -1,8 +1,5 @@
 .portfolio {
-    background-color: #eaf4fc;
-    border: 2px solid black;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    background-color: white;
     width: 60vw;
     padding: 2rem;
     border-radius: 10px;
@@ -18,18 +15,42 @@
 .add-coin{
     font-weight: 600;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: flex-start;
     flex-direction: row;
     
 }
 
+.inputFields{
+    border-radius: 25px;
+    width: 80%;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    background-color: lightgray;
+    padding: 2%;
+    padding-left: 5%;
+}
 button {
     border: 1px solid grey;
     background-color: rgb(255, 103, 103);
     color: white;
     border-radius: 15px;
     font-weight: 900;
+}
+.addCoinBtn{
+    padding: 0.4rem;
+    font-size: 1rem;
+}
+.textWarning{
+    color:white;
+    background: rgb(255, 103, 103);
+}
+.submitBtn{
+    position: relative;
+    padding: 0.5rem;
+    font-size: 1rem;
+    left: 10%;
+    margin-top: 5rem;
 }
 
 button:hover{
@@ -39,9 +60,43 @@ button:hover{
 input {
     border: 0;
     outline: 0;
-    background: transparent;
-    border-bottom: 1px solid black;
+    background: white;
+    text-align: center;
+    width:40%;
+    
 }
-input + input{
-    margin-left: 1%;
+div input + input{
+    margin-left: 15%;
+}
+
+
+.assets{
+    width: 100%;
+    background:white;
+    text-align: center;
+    padding: 2%;
+    border-radius: 10px;
+    margin-bottom: 4%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.background-color{
+    background: rgb(255, 103, 103);
+    padding: 10%;
+    width:100%;
+    border-radius: 20px;
+    margin-top: 5%;
+}
+
+.centerText{
+    text-align: center;
+}
+.totalVal{
+    font-size: 2.5rem;
+}
+.viewPortfolio{
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+
 }

@@ -1,3 +1,12 @@
+body{
+  min-height: 100vh; 
+  background-color: rgb(41, 42, 43);
+  background-position: 0px -30vh; 
+  background-repeat: no-repeat;
+  background-image: radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%);
+  background-size: cover;
+  background-attachment: fixed;
+}
 .App {
   text-align: center;
 }
@@ -5,7 +14,13 @@
 ul{
   list-style-type: none;
 }
-
+nav {
+  width: 150vw;
+}
+div a{
+  width:20%; 
+  height:75%;
+}
 
 li a{
   text-decoration: none;
@@ -28,22 +43,21 @@ li a{
 #folders {
   position: relative;
   right: 1.25rem;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 2rem;
 }
 #folders > li {
-  background-color: #01949A;
-  width: 100%;
-  height: 4rem;
-  padding: 0 1.5rem;
+  background-color:  rgb(255, 103, 103);
+  width: 90%;
+  height: 3rem;
   border-radius: 1rem;
-  line-height: 4rem;
+  line-height: 3rem;
   transition: all 100ms ease-out;
 }
 #folders > li:hover {
   box-shadow: 0 16px 16px -4px rgba(0, 0, 0, 0.1);
   transform: scale(1.02);
-  background-color: #004369;
+  background-color:  rgb(255, 50, 50);
 
 }
 
@@ -53,8 +67,8 @@ li a{
   text-align: left;
 }
 .parent {
-  font-size: 1.5rem;
-  line-height: 1rem;
+  font-size: 2.5rem;
+  line-height: 2rem;
 
 }
 .name {
@@ -64,13 +78,14 @@ li a{
 }
 
 .home-pro-pic{
-  border: 2px solid black;
+  border: 2px solid whitesmoke;
   border-radius: 50%;
-  width: 75%;
+  width: 80%;
 }
 
 #header-line{
-  width: 50vw; 
+  width: 100%; 
+  border: 1px solid #4F4D4D;
   margin-bottom: 2%;
 }
 
@@ -83,6 +98,6 @@ li a{
 
 @media only screen and (min-width : 1001px) and (max-width: 1439px){
   #header-line{
-    width: 65vw;
+    width: 100%;
   }
 }

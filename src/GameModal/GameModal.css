@@ -1,15 +1,54 @@
 #game-info{
     display: inline-block;
+    width: 80vw;
+    height:90vh
+    
 }
 
 #game-info div{
-    margin-bottom: 4rem; 
+    margin-bottom: 2rem; 
 }
 
+#game-name-creator{
+    width:50%;
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px 0px black;
+    border-radius: 25px;
+    text-align: center;
+}
+#number{
+    font-size: 3rem;
+}
+.game-information{
+    background-color: gray;
+    width: 27%;
+    height: 95%;
+    font-size: larger;
+    box-shadow: 0px 5px 5px 10px rgba(0,0,0,.15);
+    border-radius: 0% 0% 50% 50% / 0% 0% 5% 5%;
+    margin-left: 3rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+.game-information h2{
+    
+    background-color: #4089F6;
+}
 #game-players{
-    margin-bottom: 4rem;
+    position: relative;
+    margin-bottom: 3rem;
+    bottom: 56%;
+    margin-right: 0.5rem;
+    width: 60%;
 }
-
+.rules{
+    position: relative;
+    bottom: 50%;
+    background: gray;
+    width: 60%;
+    margin-right: 0.5rem;
+}
 #leaderboard{
     border: 1px solid black;
     border-radius: 3px;
@@ -27,4 +66,11 @@
 .view-portfolio-btn{
     margin-right: 1rem;
     cursor: pointer;
+}
+#gameId{
+    position: relative;
+    left: 60%;
+    background:  rgb(255, 103, 103);
+    font-size: 2rem;
+    bottom: 4rem;
 }
