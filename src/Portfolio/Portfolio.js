@@ -215,9 +215,9 @@ export function ViewPortfolio({username, portfolio, tokens}){
 
             {tokens.map((coin) => (
                 coin !== "canEdit" ? (
-                    <div>
-                        <span>Asset: {coin} </span>
-                        <span> Amount: {portfolio[coin]} {coin}</span>
+                    <div className="assets">
+                        
+                        <span>  {portfolio[coin]} {coin}</span><br/>
                         <span> Amount in USD:{Math.round((portfolio[coin] * dailyCoinPrices[coinNames.indexOf(coin)]) * 100) / 100} </span>
                     </div>         
                 ) : (
