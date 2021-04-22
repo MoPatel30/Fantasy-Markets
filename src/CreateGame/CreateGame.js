@@ -6,7 +6,7 @@ import firebase from "firebase"
 
 
 function CreateGame() {
-    const docRef = db.collection("current_games")
+    const docRef = db.collection("joinable_games")
     const create = store.getState().username
     const userRef = db.collection("users")
 
@@ -25,8 +25,8 @@ function CreateGame() {
             creator: create,
             starting_amount: data[1],
             duration: data[2],
-            start_date: new Date(Date.now()).toString(),
-            end_date: new Date(Date.now() + 12096e5).toString(),
+            start_date: Math.round(new Date().getTime()) + 86400000,
+            end_date: Math.round(new Date().getTime()) + 1209600000,
             max_players: data[3],
             player_count: 1,
             [create]: {"cash": Number(data[1]), "canEdit": true},

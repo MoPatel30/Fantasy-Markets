@@ -74,7 +74,7 @@ function MyGames() {
                                 <div id="non-spanner">
                                     <h3>Starting Amount: {instance.data().starting_amount} USD</h3>
                                     <h3>Duration: {instance.data().duration - 1} {instance.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
-                                    <h3>Start date: {instance.data().start_date}</h3>
+                                    <h3>Start date:  {String(new Date(instance.data().end_date)).substring(0,16)}</h3>
                                 </div>
                         
                                 {/* <div id="non-spanner">

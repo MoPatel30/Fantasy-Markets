@@ -12,14 +12,54 @@ import Dialog from '@material-ui/core/Dialog';
 function GameModal({ gameInfo }) {
     const [Portfolio, setPortfolio] = useState()
     const [players, setPlayers] = useState([])
+    const [leaderboard, setLeaderboard] = useState([])
     const [Tokens, setTokens] = useState([])
-    const [view,setView] = useState(false);
-    const [editPort,setEditPort] = useState(false);
+    const [view, setView] = useState(false)
+    const [editPort, setEditPort] = useState(false)
+    const [currentTime, setCurrentTime] = useState(Math.round(new Date().getTime()))
+    const [days, setDays] = useState("")
+    const [hours, setHours] = useState("23")
+    const [minutes, setMinutes] = useState("59")
+    const [seconds, setSeconds] = useState("59")
 
     useEffect(() => {
-        gameInfo.data().players.forEach((player) => {setPlayers([...players, player])})
+        gameInfo.data().players.forEach((player) => {
+            console.log(player)
+            console.log(gameInfo.data()[player].total)
+            setLeaderboard( [...leaderboard, {[player] : gameInfo.data()[player].total}] )
+        })
+        setPlayers(gameInfo.data().players)
+        //setPlayers(mergeSort(players))
     }, [])
 
+    function mergeSort(array) { 
+        console.log(array)
+        console.log(leaderboard)
+        const half = array.length / 2    
+        // Base case or terminating case
+        if(array.length < 2){
+            return array 
+        }   
+        const left = array.splice(0, half)
+        return merge(mergeSort(left), mergeSort(array))
+    }
+
+    function merge(left, right) {
+        let arr = []
+        // Break out of loop if any one of the array gets empty
+        while (left.length && right.length) {
+            // Pick the smaller among the smallest element of left and right sub arrays 
+            if (leaderboard[left[0]] < leaderboard[right[0]]) {
+                arr.push(left.shift())  
+            } else {
+                arr.push(right.shift()) 
+            }
+        }     
+        // Concatenating the leftover elements
+        // (in case we didn't go through the entire left or right array)
+        return [ ...arr, ...left, ...right ]
+    }
+    
     function joinGameSession(e){
         e.preventDefault()
         if(!gameInfo.data()[store.getState().username]){
@@ -31,27 +71,17 @@ function GameModal({ gameInfo }) {
             db.collection("users").doc(store.getState().username).update({
                 current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
             })
-            store.dispatch({     // store user info in global state 
+            store.dispatch({ // store user info in global state 
                 type: "UPDATE_GAMES",
                 payload: {
                     MyGames: [...store.getState().username, e.target.value]        
                 } 
             }) 
         }
-
-        // if(players.indexOf(store.getState().email) === -1){
-        //     db.collection("current_games").doc(e.target.value).update({
-        //         player_count: firebase.firestore.FieldValue.increment(1),
-        //         players: firebase.firestore.FieldValue.arrayUnion( {[store.getState().email]: {cash: gameInfo.data().starting_amount}} )  
-        //     })
-        //     db.collection("users").doc(`${store.getState().userInfo.email}`).update({
-        //         current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
-        //     })
-        // }
     }
 
     function displayEditPortfolio(username, portfolio){
-        setEditPort(true);
+        setEditPort(true)
         setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
     }
 
@@ -59,9 +89,6 @@ function GameModal({ gameInfo }) {
     function displayViewPortfolio(username, portfolio){
         db.collection('coin_prices').onSnapshot(snapshot => {  
             snapshot.docs.map(doc => (
-                //console.log(doc.id)
-                //console.log(doc.data().value)
-                //setAssets({...assets, [name]: Number(convertedPrice)}) 
                 setDailyCoinPrices({...dailyCoinPrices, [doc.id] : Number(doc.data().value)})  
             )) 
         })     
@@ -76,12 +103,50 @@ function GameModal({ gameInfo }) {
         setView(true)
         setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} />)
     }
+
     const viewClose = () => {
         setView(false);
     }
+
     const editPortClose = () => {
         setEditPort(false);
     }
+
+    useEffect(() => {
+        let startTime = gameInfo.data().start_date
+        let endTime = gameInfo.data().end_date
+        if(startTime > currentTime){
+            setCurrentTime(Math.round(new Date().getTime()))
+      
+            let timer = (startTime - currentTime) / 1000
+
+            let d = Math.floor(timer / 86400)
+            let h = Math.floor(timer / 3600)
+            let m = Math.floor(timer % 3600 / 60)
+            let s = Math.floor(timer % 3600 % 60)  
+
+            setDays(d > 0 ? d + (d === 1 ? " day" : " days") : "")
+            setHours(h > 0 ? h + (h === 1 ? " hour" : " hours") : "")
+            setMinutes(m > 0 ? m + (m === 1 ? " minute" : " minutes") : "")
+            setSeconds(s > 0 ? s + (s === 1 ? " second" : " seconds") : "")
+        }
+        else {
+            setCurrentTime(Math.round(new Date().getTime()))
+
+            let timer = (endTime - currentTime) / 1000
+
+            let d = Math.floor(timer / 86400)
+            let h = Math.floor(timer % 86400 / 3600)
+            let m = Math.floor(timer % 86400 % 3600 / 60)
+            let s = Math.floor(timer % 86400 % 3600 % 60)
+        
+            setDays(d > 0 ? d + (d === 1 ? " day" : " days") : "")
+            setHours(h > 0 ? h + (h === 1 ? " hour" : " hours") : "")
+            setMinutes(m > 0 ? m + (m === 1 ? " minute" : " minutes") : "")
+            setSeconds(s > 0 ? s + (s === 1 ? " second" : " seconds") : "")
+        }
+    }, [])
+   
 
     return (
         <div>
@@ -102,11 +167,15 @@ function GameModal({ gameInfo }) {
 
                     <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
                     <br/>
-                    <h3>Start date:<br/>{gameInfo.data().start_date.substring(0,16)}</h3>
+                    <h3>Start date:<br/>{String(new Date(gameInfo.data().start_date)).substring(0,16)}</h3>
                     <br/>
-                    <h3>End date: <br/>{gameInfo.data().end_date.substring(0,16)}</h3>
-                                    
-                    
+                    <h3>End date: <br/>{String(new Date(gameInfo.data().end_date)).substring(0,16)}</h3>
+                    <br />
+                    {days !== "" ? (
+                        <h3>Countdown: {days}: {hours}: {minutes}: {seconds}</h3>
+                    ) : (
+                        <h3>Countdown: {hours}: {minutes}: {seconds}</h3>
+                    )}
                 </div>
             </div>
          
@@ -120,12 +189,17 @@ function GameModal({ gameInfo }) {
             }
 
             <div id="game-players">
-                <h2>Current Players:</h2>
-                {gameInfo.data().players ? (
-                    console.log(gameInfo.data().mopatel1214),
-                    gameInfo.data().players.map((player) => (
+                {new Date().getTime() > gameInfo.data().start_date ? (
+                    <h2>Leaderboard</h2>
+                ) : (
+                    <h2>Current Players:</h2>
+                )
+                }
+                {players ? (
+                    console.log(players),
+                    mergeSort(players).map((player) => (
                         <div id="leaderboard">
-                                                    
+                            <span> {gameInfo.data().players.indexOf(player) + 1}.) </span>                 
                             <span>{player}</span>
                            
                             <span id="portfolio-btns">

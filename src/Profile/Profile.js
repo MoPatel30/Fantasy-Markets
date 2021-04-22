@@ -11,7 +11,7 @@ function Profile({ email, userInfo }) {
     const [bio, setBio] = useState(`Hi, my name is ${userInfo.displayName}`)
     const [wins, setWins] = useState(0)
     const [totalGames, setTotalGames] = useState(0)
-    const [currentGames, setCurrentGames] = useState(0)
+    const [currentGames, setCurrentGames] = useState(store.getState().MyGames.length)
     const[tempBio, setTempBio] = useState("")
     const [editBio, setEditBio] = useState(false)
 
