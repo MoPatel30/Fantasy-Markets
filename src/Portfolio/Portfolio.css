@@ -100,3 +100,61 @@ div input + input{
     text-align: center;
 
 }
+
+.assets{
+    width: 100%;
+    background:white;
+    text-align: center;
+    padding: 2%;
+    border-radius: 10px;
+    margin-bottom: 4%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Phones Portrait*/
+@media (min-width: 320px) and (max-width: 480px){
+    #game-name-creator {
+        width: 95%;
+        border: 1px solid black;
+        box-shadow: 1px 1px 1px 0px black;
+        border-radius: 25px;
+        text-align: center;
+    }
+    .game-information {
+        background-color: gray;
+        width: 85%;
+        height: fit-content;
+        font-size: medium;
+        box-shadow: 0px 5px 5px 10px rgba(0,0,0,.15);
+        border-radius: 0% 0% 50% 50% / 0% 0% 5% 5%;
+         margin-left: auto;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    #game-players {
+        position: relative;
+        margin-bottom: 3rem;
+        bottom: 0%;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    .rules {
+        position: relative;
+        bottom: 0%; 
+        background: gray;
+        width: 85%;
+         margin-right: auto;
+    }
+
+    #number{
+        font-size: 2rem;
+    }
+    #gameId {
+        position: relative;
+        left: 20%;
+        background: rgb(255, 103, 103);
+        font-size: 2rem;
+        top: 27rem;
+    }
+  }

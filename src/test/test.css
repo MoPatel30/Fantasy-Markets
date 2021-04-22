@@ -27,7 +27,6 @@ body {
 
 header {
     width: 100%;
-    height: 8rem;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -42,7 +41,7 @@ header > div {
 }
 
 #title {
-    width: 100%;
+    width: 68%;
 }
 #title .parent {
     line-height: 1em;
@@ -126,3 +125,55 @@ footer {
     width: 100%;
     height: 8rem;
 }
+
+/*Bigger Phones + Ipad landscape */
+@media (min-width: 768px) and (max-width:1024px){
+   header{
+       position: relative;
+   }
+   #blurry-filter{
+       position: relative;
+       height: 0;
+   }
+  }
+
+/*Medium size devices + Landscape for phones*/
+@media (min-width: 481px) and (max-width:767px){
+    #blurry-filter{
+        position: relative;
+        height: 0;
+    }
+    #folders{
+        margin-top: 30%;
+        margin-bottom: 2rem;
+        
+       }
+       nav{
+           position: absolute;
+           width: 95%;
+       }
+       header{
+           position: relative;
+       }
+     
+  }
+
+/*Smaller Phones */
+@media (min-width: 320px) and (max-width: 480px){
+    #blurry-filter{
+        position: relative;
+        height: 0;
+    }
+    #folders{
+    margin-top: 50%;
+    margin-bottom: 2rem;
+    
+   }
+   nav{
+       position: absolute;
+       width: 95%;
+   }
+   header{
+       position: relative;
+   }
+  }

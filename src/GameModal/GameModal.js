@@ -102,9 +102,9 @@ function GameModal({ gameInfo }) {
 
                     <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
                     <br/>
-                    <h3>Start date:<br/>{gameInfo.data().start_date.substring(0,16)}</h3>
+                    <h3>Start date:<br/>{gameInfo.data().start_date}</h3>
                     <br/>
-                    <h3>End date: <br/>{gameInfo.data().end_date.substring(0,16)}</h3>
+                    <h3>End date: <br/>{gameInfo.data().end_date}</h3>
                                     
                     
                 </div>
