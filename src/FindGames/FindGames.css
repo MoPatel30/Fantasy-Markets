@@ -29,9 +29,10 @@
 	outline: none;
 }
 #searchGlass{
+    margin-top: 0.75%;
     font-size: 1.5rem;
     position: relative;
-    left:25%;
+    left:27%;
 }
 
 /* figure {
@@ -83,8 +84,6 @@ figure > figcaption {
     text-indent: 2%;
 }
 
-
-
 .flip-card {
     cursor: pointer;
     background: inherit;
@@ -102,4 +101,26 @@ figure > figcaption {
 
 }
 
-  
+@media (min-width: 481px) and (max-width:767px){
+    #searchGlass{
+        margin-top: 0.75%;
+        font-size: 1.5rem;
+        position: relative;
+        left:20%;
+    }    
+    .searchbar {
+        width: 80%;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px){
+    #searchGlass{
+        margin-top: 1.75%;
+        font-size: 1.5rem;
+        position: relative;
+        left:20%;
+    }
+    .searchbar {
+        width: 80%;
+    }
+}

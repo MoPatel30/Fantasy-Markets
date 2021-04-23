@@ -18,10 +18,9 @@
 
 .box {
     position: relative;
-    min-width: 20%;
-    max-width: 30%;
+    width: 10vw;
     min-height: 200px;
-
+    margin-right: 40px;
     background: #4089F6;
     border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
     color: white;
@@ -45,3 +44,28 @@
       display:flex;
       width:fit-content;
   } 
+
+  /*Smaller Phones */
+@media (min-width: 320px) and (max-width: 480px){
+  .stats{
+    flex-direction: column;
+    margin-bottom: 2%;
+  }
+  .box{
+    width: 100%;
+    min-height: 235px;
+    margin-top: 5%;
+    margin-bottom:15%;
+  }
+  .stats{
+    margin-top: 30%;  
+    display:flex;
+    width: fit-content;
+  }
+  .profile-pic{
+    margin-top: 10%;
+  }
+  .bio-section{
+    margin-top: 10%;
+  }
+ }

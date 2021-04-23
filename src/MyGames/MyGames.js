@@ -48,7 +48,6 @@ function MyGames() {
 
     return (
         <div>
-        <div id = "game-style">
             <div className="searchbar">
                 <input
                     type="text"
@@ -58,15 +57,15 @@ function MyGames() {
                 <i className="fas fa-search" id="searchGlass"></i>
             </div>
 
+            <div id = "game-style">
             {filteredGame.length === 0 ? (
-                <p>Head over to "Find Games" to join an upcoming game session!</p>
+                <p style={{color: "white"}}>Head over to "Find Games" to join an upcoming game session!</p>
             ) : (
             filteredGame.map((instance) => (
                 <div>
                     <div onClick={() => handleClickOpen(instance)} className="flip-card">
                         <div className="flip-card-inner">
-                            <div className="flip-card-front">
-                               
+                            <div className="flip-card-front">  
                                 <div id="spanner">
                                     <h2><u>{instance.data().name}</u></h2>
                                 </div>
@@ -76,17 +75,10 @@ function MyGames() {
                                     <h3>Duration: {instance.data().duration - 1} {instance.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
                                     <h3>Start date:  {String(new Date(instance.data().end_date)).substring(0,16)}</h3>
                                 </div>
-                        
-                                {/* <div id="non-spanner">
-                                    <h3>Start date: {instance.data().start_date}</h3>
-                                    <h3>End date: {instance.data().end_date}</h3>
-                                </div> */}
 
                                 <div id="spanner">                                 
                                     <h3>Players: {instance.data().player_count} / {instance.data().max_players}</h3>
                                 </div>
-
-                                {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}
                             </div>
                         </div>
                     </div>

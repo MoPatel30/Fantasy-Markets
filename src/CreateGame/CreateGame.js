@@ -19,17 +19,24 @@ function CreateGame() {
             data.push(pair[1])
             console.log(pair[0] + ': ' + pair[1])
         }
-        // firebase.firestore.FieldValue.serverTimestamp()
+
+        let time = 1209600000
+        if(data[2] === "1"){
+            time = 1209600000 / 2
+        } else{
+            time = 1209600000
+        } 
+       
         docRef.add({
             name: data[0],
             creator: create,
+            duration: Number(data[2]),
             starting_amount: data[1],
-            duration: data[2],
             start_date: Math.round(new Date().getTime()) + 86400000,
-            end_date: Math.round(new Date().getTime()) + 1209600000,
+            end_date: Math.round(new Date().getTime()) + time,
             max_players: data[3],
             player_count: 1,
-            [create]: {"cash": Number(data[1]), "canEdit": true},
+            [create]: {"cash": Number(data[1]), "canEdit": true, "total": Number(data[1])},
             players: [create]
         })
         .then((doc) => {
@@ -55,8 +62,8 @@ function CreateGame() {
                     <select id="job" name="field3">
 
                     <optgroup id="duration" label="Weeks">
-                        <option value="2">1 Week</option>
-                        <option value="3">2 Weeks</option>
+                        <option value="1">1 Weeks</option>
+                        <option value="2">2 Weeks</option>
                     </optgroup>
 
                     </select>    

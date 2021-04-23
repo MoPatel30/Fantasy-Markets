@@ -55,7 +55,7 @@ function FindGames() {
             </div>
             <div id = "game-style">
                 {filteredGame.length === 0 ? (
-                    <p style={{color: "white"}}>No games found. Head over to "Create a Game" to create a new game session!</p>
+                    <p style={{color: "white"}}>No new games found. Head over to "Create a Game" to create a new game session!</p>
                 ) : (
                 filteredGame.map((instance) => (
                     <div>

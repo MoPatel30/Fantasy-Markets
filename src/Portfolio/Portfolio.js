@@ -19,11 +19,14 @@ function EditPortfolio({username, gameId, portfolio}) {
     async function addCoin(e){
         if(cash - coinAmount < 0){
             alert("Not enough funds remaining")
+            return
         }
         if(Object.keys(assets).length >= 5){
             alert("You are only allowed a maximum of 5 coins. Please rebalance your portfolio if you wish to use your remaining cash.")
+            return
         }
         else{
+            console.log("whyyyy")
             let name = coinName
             let convertedPrice = 0
             db.collection("coin_prices").doc(name).get().then((doc) => {
@@ -138,7 +141,6 @@ export function ViewPortfolio({username, portfolio, tokens}){
 
     useEffect(() => {
         getMarkers()
-
         // let margin = { top: 30, right: 120, bottom: 30, left: 50 }
         // let width = 960 - margin.left - margin.right
         // let height = 500 - margin.top - margin.bottom
@@ -214,7 +216,7 @@ export function ViewPortfolio({username, portfolio, tokens}){
             
             <div className="centerText">
                 Total Account Value<br/>
-                <span className="totalVal">${portfolio["total"]}</span>
+                <span className="totalVal">${Math.round((Number(portfolio["total"]) * 100)) / 100}</span>
             </div>
             <div className="background-color">
                 {tokens.map((coin) => (
@@ -223,7 +225,7 @@ export function ViewPortfolio({username, portfolio, tokens}){
                     ) : (                
                         <div style={{color: "white"}}>
                             <span>Asset: {coin} </span>
-                            <span> Amount: {portfolio[coin]} {coin}</span>
+                            <span> Amount: {Math.round((Number(portfolio[coin]) * 10000)) / 10000} {coin}</span>
                             { coin === "cash" ? (
                                 <span> Amount in USD: {portfolio[coin]} </span>
                             ) : (

@@ -29,15 +29,15 @@ function App({ username, userInfo }) {
                 
                 <nav>
                   <ul id = "folders">
-                    <li><Link to="/find">Find a Game</Link></li>
-                    <li><Link to="/games">My Games</Link></li>
-                    <li><Link to="/create">Create Game</Link></li>
+                    <li><Link to="/find" style={{color:"white"}}>Find a Game</Link></li>
+                    <li><Link to="/games" style={{color:"white"}}>My Games</Link></li>
+                    <li><Link to="/create" style={{color:"white"}}>Create Game</Link></li>
                   </ul>
                 </nav>
                 
                 <Link to="/profile"> 
                   <a>
-                    <img className="home-pro-pic" src={userInfo.photoURL} />
+                    <img className="home-pro-pic" alt="profile pic" src={userInfo.photoURL} />
                   </a>
                 </Link>    
               </div>

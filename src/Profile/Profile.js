@@ -16,13 +16,21 @@ function Profile({ email, userInfo }) {
     const [editBio, setEditBio] = useState(false)
 
     function changeBio(){
-        setEditBio(!editBio);
+        setEditBio(!editBio)
+
     }
 
     function saveBio(){
-        setEditBio(!editBio);
+        setEditBio(!editBio)
         setBio(tempBio)
 
+        if(tempBio.length > 140){
+            alert("New bio is too long. Please shorten it.")
+        }
+        else{
+            var docRef = db.collection("users").doc(username)
+            docRef.update({bio: tempBio})
+        }
     }
 
     useEffect(() => {

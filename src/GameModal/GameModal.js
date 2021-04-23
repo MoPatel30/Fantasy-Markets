@@ -29,36 +29,7 @@ function GameModal({ gameInfo }) {
             setLeaderboard( [...leaderboard, {[player] : gameInfo.data()[player].total}] )
         })
         setPlayers(gameInfo.data().players)
-        //setPlayers(mergeSort(players))
     }, [])
-
-    function mergeSort(array) { 
-        console.log(array)
-        console.log(leaderboard)
-        const half = array.length / 2    
-        // Base case or terminating case
-        if(array.length < 2){
-            return array 
-        }   
-        const left = array.splice(0, half)
-        return merge(mergeSort(left), mergeSort(array))
-    }
-
-    function merge(left, right) {
-        let arr = []
-        // Break out of loop if any one of the array gets empty
-        while (left.length && right.length) {
-            // Pick the smaller among the smallest element of left and right sub arrays 
-            if (leaderboard[left[0]] < leaderboard[right[0]]) {
-                arr.push(left.shift())  
-            } else {
-                arr.push(right.shift()) 
-            }
-        }     
-        // Concatenating the leftover elements
-        // (in case we didn't go through the entire left or right array)
-        return [ ...arr, ...left, ...right ]
-    }
     
     function joinGameSession(e){
         e.preventDefault()
@@ -105,11 +76,11 @@ function GameModal({ gameInfo }) {
     }
 
     const viewClose = () => {
-        setView(false);
+        setView(false)
     }
 
     const editPortClose = () => {
-        setEditPort(false);
+        setEditPort(false)
     }
 
     useEffect(() => {
@@ -147,15 +118,9 @@ function GameModal({ gameInfo }) {
         }
     }, [])
    
-
     return (
-        <div>
+        <div id = "info">
             <div id="game-info">
-                <div id="game-name-creator">
-                    <h1><u>{gameInfo.data().name}</u></h1>
-                    <h3>Created by {gameInfo.data().creator}</h3>
-                </div>
-        
                 <div className = "game-information">
                     <h2><u>Game Information:</u></h2>
                     <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>
@@ -165,7 +130,7 @@ function GameModal({ gameInfo }) {
                     <br/>
                     <br />
 
-                    <h3>Duration: {gameInfo.data().duration - 1} {gameInfo.data().duration - 1 === 1 ? `week`: `weeks`}</h3>
+                    <h3>Duration: {gameInfo.data().duration} {gameInfo.data().duration === 1 ? `week`: `weeks`}</h3>
                     <br/>
                     <h3>Start date:<br/>{String(new Date(gameInfo.data().start_date)).substring(0,16)}</h3>
                     <br/>
@@ -176,19 +141,24 @@ function GameModal({ gameInfo }) {
                     ) : (
                         <h3>Countdown: {hours}: {minutes}: {seconds}</h3>
                     )}
+
+                    {gameInfo.data().players.indexOf(store.getState().username) === -1 && gameInfo.data().player_count < gameInfo.data().max_players ? (
+                        <div>
+                            <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Enter Game</button> 
+                        </div>
+                    ): (
+                        <p></p>
+                    )
+                    }
                 </div>
             </div>
-         
-            {gameInfo.data().players.indexOf(store.getState().username) === -1 && gameInfo.data().player_count < gameInfo.data().max_players ? (
-                <div>
-                    <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Enter Game</button> 
-                </div>
-            ): (
-                <p></p>
-            )
-            }
 
             <div id="game-players">
+                <div id="game-name-creator">
+                    <h1><u>{gameInfo.data().name}</u></h1>
+                    <h3>Created by {gameInfo.data().creator}</h3>
+                </div>
+        
                 {new Date().getTime() > gameInfo.data().start_date ? (
                     <h2>Leaderboard</h2>
                 ) : (
@@ -197,7 +167,7 @@ function GameModal({ gameInfo }) {
                 }
                 {players ? (
                     console.log(players),
-                    mergeSort(players).map((player) => (
+                    players.map((player) => (
                         <div id="leaderboard">
                             <span> {gameInfo.data().players.indexOf(player) + 1}.) </span>                 
                             <span>{player}</span>
@@ -223,11 +193,11 @@ function GameModal({ gameInfo }) {
 
             <div className = "rules">
                 <h1>General Rules</h1>
-                <h3>1.) Rule #1</h3>
-                <h3>2.) Rule #2</h3>
-                <h3>3.) Rule #3</h3>
-                <h3>4.) Rule #4</h3>
-                <h3>5.) Rule #5</h3>
+                <h3>1.) Don't refer to other user's portfolios as a means to make real life financial investments. Not that any of you would...</h3>
+                <h3>2.) Don't try to exploit any bugs you come across. Have some integrity. Reach out to us explaining the bug.</h3>
+                <h3>3.) You only get to finalize your portfolio once. Do your research, correctly input your investments, and hit "Submit". </h3>
+                <h3>4.) To reiterate, do NOT make any real life financial decisions based on the results/outcomes of these games. Seriously.</h3>
+                <h3>5.) Relax and have fun with it :)</h3>
             </div>
 
             {/* The Modal for Viewing your Portfolio */}
