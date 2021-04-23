@@ -223,9 +223,10 @@ export function ViewPortfolio({username, portfolio, tokens}){
                     coin === "canEdit" || coin === "total" ? (
                         <div></div>
                     ) : (                
-                        <div style={{color: "white"}}>
+                        <div className="assets">
                             <span>Asset: {coin} </span>
                             <span> Amount: {Math.round((Number(portfolio[coin]) * 10000)) / 10000} {coin}</span>
+                            <br />
                             { coin === "cash" ? (
                                 <span> Amount in USD: {portfolio[coin]} </span>
                             ) : (
