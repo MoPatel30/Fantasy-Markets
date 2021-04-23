@@ -1,7 +1,7 @@
 #game-info{
     display: inline-block;
     width: 80vw;
-    height: fit-content;
+    height: 90vh;
 }
 
 #info{
@@ -37,7 +37,7 @@
 
 .game-information h2{
     color: black;
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(240, 240, 240);
 }
 #game-players{
     position: relative;

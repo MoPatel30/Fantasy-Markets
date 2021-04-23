@@ -215,8 +215,8 @@ export function ViewPortfolio({username, portfolio, tokens}){
             <h1><u className = "title">{username}'s Portfolio</u></h1>
             
             <div className="centerText">
-                Total Account Value<br/>
-                <span className="totalVal">${Math.round((Number(portfolio["total"]) * 100)) / 100}</span>
+                <h3>Total Account Value: </h3>
+                <span className="totalVal"><strong>${Math.round((Number(portfolio["total"]) * 100)) / 100}</strong></span>
             </div>
             <div className="background-color">
                 {tokens.map((coin) => (
@@ -224,13 +224,12 @@ export function ViewPortfolio({username, portfolio, tokens}){
                         <div></div>
                     ) : (                
                         <div className="assets">
-                            <span>Asset: {coin} </span>
-                            <span> Amount: {Math.round((Number(portfolio[coin]) * 10000)) / 10000} {coin}</span>
-                            <br />
+                            <p>Asset: <strong>{coin}</strong> </p>
+                            <p> Amount: <strong>{Math.round((Number(portfolio[coin]) * 10000)) / 10000} {coin}</strong> </p>
                             { coin === "cash" ? (
-                                <span> Amount in USD: {portfolio[coin]} </span>
+                                <p> Amount in USD: <strong>${portfolio[coin]}</strong> </p>
                             ) : (
-                                <span> Amount in USD: {Math.round((portfolio[coin] * dailyCoinPrices[coinNames.indexOf(coin)]) * 100) / 100} </span>         
+                                <p> Amount in USD: <strong>${Math.round((portfolio[coin] * dailyCoinPrices[coinNames.indexOf(coin)]) * 100) / 100}</strong> </p>         
                             )    
                             }
                         </div>         

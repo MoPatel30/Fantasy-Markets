@@ -173,7 +173,7 @@ function GameModal({ gameInfo }) {
                             <span>{player}</span>
                            
                             <span id="portfolio-btns">
-                                {store.getState().username === player && gameInfo.data()[player]["canEdit"] ? (
+                                {store.getState().username === player && gameInfo.data()[player]["canEdit"]  && new Date().getTime() < gameInfo.data().start_date ? (
                                     <span>
                                         <span onClick={() => {displayEditPortfolio(player, gameInfo.data()[player])}} className="edit-portfolio-btn"><u>Edit Portfolio</u></span>
                                         <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player])}} className="view-portfolio-btn"><u>View Portfolio</u></span>

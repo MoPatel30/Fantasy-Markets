@@ -88,12 +88,11 @@ figure > figcaption {
     cursor: pointer;
     background: inherit;
     width: 320px;
-    height: fit-content;
+    height: 100%;
     padding: 8px;
     margin-bottom: 1.2rem;
     color:white;
     box-shadow: inset 0 0 2000px rgba(64, 137, 246, 0.7);
-    border-radius: 20px;
 }
 .flip-card:hover{
     transform: scale(1.05);

@@ -63,27 +63,24 @@ function FindGames() {
                             <div id="spanner">
                                 <h2><u>{instance.data().name}</u></h2>
                                 <h3>Created By: {instance.data().creator}</h3>
+                                <br />
+                                <hr style={{width: "100%"}} />
                             </div>
                             <br />
                             <div id="Midspanner">                                 
                                 <h3>{instance.data().player_count} / {instance.data().max_players} <br /> Players</h3>
                             </div>
                             <br />
+                            <hr style={{width: "100%"}} />
+                            <br />
                             <div id="non-spanner">
                                 <h3>Starting Amount: {instance.data().starting_amount} USD</h3>
                                 <h3>Start date: {String(new Date(instance.data().start_date)).substring(0,16)}</h3>
                             </div>
-                    
-                            {/* <div id="non-spanner">
-                                <h3>Start date: {instance.data().start_date}</h3>
-                                <h3>End date: {instance.data().end_date}</h3>
-                            </div> */}
 
                             <div id="spanner">                                 
                                 <h3>Players: {instance.data().players.length} / {instance.data().max_players}</h3>
-                            </div>
-
-                            {/* <h3 id = "id" value = {`${instance.id}`}>{instance.id}</h3> */}   
+                            </div>     
                         </div>
                     </div>      
                 )))
