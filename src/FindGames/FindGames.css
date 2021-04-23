@@ -88,7 +88,7 @@ figure > figcaption {
     cursor: pointer;
     background: inherit;
     width: 320px;
-    height: 285px;
+    height: fit-content;
     padding: 8px;
     margin-bottom: 1.2rem;
     color:white;
