@@ -10,6 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Select from "react-select";
+import { partition } from 'd3'
 
 
 
@@ -22,7 +23,6 @@ function FindGames() {
     const [search, setSearch] = useState("");
 
     const [unfiltered, setUnfiltered] = useState([]) // testing
-    const [isFiltered, setIsFiltered] = useState(false) // testing
     const [currentFilter, setCurrentFilter] = useState() // testing
     const filters = [
         { label: "Choose a Filter", value: 0 },
@@ -54,42 +54,63 @@ function FindGames() {
             game.data().name.toLowerCase().includes(search.toLowerCase())
           )
         )
+
+        setUnfiltered(filteredGame)
+
       }, [search, games]);
 
-    const setFilter = e => {
-        setCurrentFilter(e.value)
-        var toSort = filteredGame.map((game) => {
-            return game
-        })
-        if(!isFiltered){
-            setUnfiltered(toSort);
-            setIsFiltered(true)
+    const quicksort = (array, l, h, filter) => {
+
+        var p
+
+        if((h - l) > 0){
+            p = split(array, l, h, filter)
+            quicksort(array, l, p-1, filter)
+            quicksort(array, p+1, h, filter)
         }
+
+        if(filter === 1 || filter === 3){
+            return (array.reverse())
+        }
+        return (array)
+    }
+
+    const split = (array, l, h, filter) => {
+        var p = h
+        var initialHigh = l
+
+        for(var i = l; i < h; i++){
+            if(filter === 1 || filter === 2){
+                if(array[i].data().starting_amount < array[p].data().starting_amount){
+                    [array[i], array[initialHigh]] = [array[initialHigh], array[i]]
+                    initialHigh++
+                }
+            }
+            if(filter === 3 || filter === 4){
+                if(array[i].data().player_count < array[p].data().player_count){
+                    [array[i], array[initialHigh]] = [array[initialHigh], array[i]]
+                    initialHigh++
+                }
+            }
+        }
+
+        [array[p], array[initialHigh]] = [array[initialHigh], array[p]]
+
+        return (initialHigh)
+    }
+
+    const setFilter = e => {
+
+        setCurrentFilter(e.value)
+        
         //"Choose a Filter"
         if(e.value === 0){
-            toSort = unfiltered.map((game) => {
-                return game
-            })
-            setIsFiltered(false)
-            console.log("filter")
+            setFilteredGame(unfiltered)
         }
-        //"Starting Cash (High to Low)"
-        if(e.value === 1){
-            toSort.sort((a,b) => b.data().starting_amount - a.data().starting_amount)
+        // Filters based on option
+        if(e.value !== 0){
+            setFilteredGame(quicksort(filteredGame, 0, filteredGame.length - 1, e.value))
         }
-        //"Starting Cash (Low to High)"
-        if(e.value === 2){
-            toSort.sort((a,b) => a.data().starting_amount - b.data().starting_amount)
-        }
-        //"Player Count (High to Low)"
-        if(e.value === 3){
-            toSort.sort((a,b) => b.data().player_count - a.data().player_count)
-        }
-        //"Player Count (Low to High)"
-        if(e.value === 4){
-            toSort.sort((a,b) => a.data().player_count - b.data().player_count)
-        }
-        setFilteredGame(toSort)
     }
 
     return (
