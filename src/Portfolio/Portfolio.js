@@ -126,7 +126,7 @@ const mapStateToProps = (state) => ({
 export default (connect)(mapStateToProps)(EditPortfolio)
 
 
-export function ViewPortfolio({username, portfolio, tokens}){
+export function ViewPortfolio({username, portfolio, tokens, rank}){
     const [coinNames, setCoinNames] = useState([])
     const [dailyCoinPrices, setDailyCoinPrices] = useState([])
     const ref = React.createRef()
@@ -134,13 +134,40 @@ export function ViewPortfolio({username, portfolio, tokens}){
     async function getMarkers() {
         const prices = await firebase.firestore().collection('coin_prices')
         prices.get().then((querySnapshot) => {
-            setCoinNames(querySnapshot.docs.map(doc => doc.id))
-            setDailyCoinPrices(querySnapshot.docs.map(doc => doc.data().value))    
+            setDailyCoinPrices(querySnapshot.docs.map(doc => doc.data().value)) 
+            setCoinNames(querySnapshot.docs.map(doc => doc.id))   
           }) 
       }
 
     useEffect(() => {
-        getMarkers()
+        getMarkers().then(() => {
+            let total = 0
+            console.log(dailyCoinPrices)
+            console.log(coinNames)
+            for(let token in portfolio){
+                if(token === "canEdit" || token === "total"){
+                    continue
+                }
+                else{
+                    console.log(portfolio[token])
+                    console.log(token)
+    
+                    console.log(dailyCoinPrices[coinNames.indexOf(token)])
+                    total += Math.round(
+                        Number(
+                            portfolio[token] * dailyCoinPrices[coinNames.indexOf(token)]
+                        ) * 100
+                    ) / 100
+                }
+            }
+            console.log(dailyCoinPrices)
+            console.log(portfolio["total"])
+            console.log(total)
+        }).catch((error) => {
+            console.log(error)
+        })
+       
+
         // let margin = { top: 30, right: 120, bottom: 30, left: 50 }
         // let width = 960 - margin.left - margin.right
         // let height = 500 - margin.top - margin.bottom
@@ -213,11 +240,26 @@ export function ViewPortfolio({username, portfolio, tokens}){
     return(
         <div className = "viewPortfolio">           
             <h1><u className = "title">{username}'s Portfolio</u></h1>
-            
+            <br />
+            <div>
+                {rank === 1 ? (
+                    <h1 style={{color: "goldenrod"}}>{rank}st Place</h1>
+                ) : rank === 2 ? (
+                    <h1 style={{color: "silver"}}>{rank}nd Place</h1>
+                ) : rank === 3 ? (
+                    <h1 style={{color: "brown"}}>{rank}rd Place</h1>
+                ) : (
+                    <h1 style={{color: "black"}}>{rank}rd Place</h1>
+                )
+                }
+            </div>
+            <br />
+
             <div className="centerText">
                 <h3>Total Account Value: </h3>
                 <span className="totalVal"><strong>${Math.round((Number(portfolio["total"]) * 100)) / 100}</strong></span>
             </div>
+
             <div className="background-color">
                 {tokens.map((coin) => (
                     coin === "canEdit" || coin === "total" ? (

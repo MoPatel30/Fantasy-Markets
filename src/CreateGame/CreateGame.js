@@ -28,7 +28,7 @@ function CreateGame() {
         } 
        
         docRef.add({
-            name: data[0],
+            name: data[0].substring(0, 24),
             creator: create,
             duration: Number(data[2]),
             starting_amount: data[1],

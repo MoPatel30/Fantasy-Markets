@@ -1,20 +1,42 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import "./App.css"
-//import Portfolio from "./Portfolio/Portfolio"
-import Investor from "./Investors/Investor"
-import GameSession from './GameSession/GameSession'
 import Login from "./Login/Login"
 import {connect} from "react-redux"
 import CreateGame from './CreateGame/CreateGame'
 import Profile from "./Profile/Profile"
 import FindGames from "./FindGames/FindGames"
 import MyGames from "./MyGames/MyGames"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import Test from "./test/test"
-import Portfolio from './Portfolio/Portfolio'
+import store from "./Redux/index"
+import {auth, db} from "./firebase.js"
+
 
 
 function App({ username, userInfo }) {
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) { 
+        let name = user.email.split("@")   
+        var docRef = db.collection("users").doc(name[0]);
+        
+        docRef.get().then((doc) => {
+          store.dispatch({  
+              type: "ADD_POST",
+              payload: {
+                  username: name[0],
+                  email: user.email,
+                  userInfo: user,
+                  MyGames: doc.data().current_games,
+                  PreviousGames: doc.data().previous_games
+              } 
+          }) 
+        })
+      }
+    })
+  }, [])
+
   return (
     <div className = "App">
       { username ? (

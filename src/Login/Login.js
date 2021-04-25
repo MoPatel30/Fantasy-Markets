@@ -20,16 +20,6 @@ export const Login = (props) => {
 
                     let username = result.user.email.split("@")[0]
                     console.log(username)
-
-                    // store.dispatch({     // store user info in global state 
-                    //     type: "ADD_POST",
-                    //     payload: {
-                    //         username: username,
-                    //         email: result.user.email,
-                    //         userInfo: result.user,
-                    //     } 
-                    // }) 
-                    
                     
                     var docRef = db.collection("users").doc(username);
                     // check if user credentials already exist. add new user data if they don't.
@@ -41,7 +31,8 @@ export const Login = (props) => {
                                     username: username,
                                     email: result.user.email,
                                     userInfo: result.user,
-                                    MyGames: doc.data().current_games           
+                                    MyGames: doc.data().current_games,
+                                    PreviousGames: doc.data().previous_games           
                                 } 
                             }) 
                             console.log("Document data:", doc.data());
@@ -71,6 +62,7 @@ export const Login = (props) => {
                 .catch((error) => alert(error.message)) 
             })
     }
+
     
     return (
         <div className="background">

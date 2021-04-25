@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 import firebase from "firebase"
+import Select from "react-select";
 
 
 function MyGames() {
@@ -16,8 +17,18 @@ function MyGames() {
     const [open, setOpen] = useState(false);
     const [modalGameInfo, setModalGameInfo] = useState(null)
     const [search, setSearch] = useState("");
+    
     const [filteredGame, setFilteredGame] = useState([])
-
+    const [unfiltered, setUnfiltered] = useState([]) // testing
+    const [isFiltered, setIsFiltered] = useState(false) // testing
+    const [currentFilter, setCurrentFilter] = useState() // testing
+    const filters = [
+        { label: "Choose a Filter", value: 0 },
+        { label: "Starting Cash (High to Low)", value: 1 },
+        { label: "Starting Cash (Low to High)", value: 2 },
+        { label: "Player Count (High to Low)", value: 3 },
+        { label: "Player Count (Low to High)", value: 4 }
+    ]
 
     const handleClickOpen = (instance) => {
       setOpen(true)
@@ -46,6 +57,41 @@ function MyGames() {
         )
     }, [search, showGames]);
 
+    const setFilter = e => {
+        setCurrentFilter(e.value)
+        var toSort = filteredGame.map((game) => {
+            return game
+        })
+        if(!isFiltered){
+            setUnfiltered(toSort);
+            setIsFiltered(true)
+        }
+        //"Choose a Filter"
+        if(e.value === 0){
+            toSort = unfiltered.map((game) => {
+                return game
+            })
+            setIsFiltered(false)
+        }
+        //"Starting Cash (High to Low)"
+        if(e.value === 1){
+            toSort.sort((a,b) => b.data().starting_amount - a.data().starting_amount)
+        }
+        //"Starting Cash (Low to High)"
+        if(e.value === 2){
+            toSort.sort((a,b) => a.data().starting_amount - b.data().starting_amount)
+        }
+        //"Player Count (High to Low)"
+        if(e.value === 3){
+            toSort.sort((a,b) => b.data().player_count - a.data().player_count)
+        }
+        //"Player Count (Low to High)"
+        if(e.value === 4){
+            toSort.sort((a,b) => a.data().player_count - b.data().player_count)
+        }
+        setFilteredGame(toSort)
+    }
+
     return (
         <div>
             <div className="searchbar">
@@ -55,6 +101,15 @@ function MyGames() {
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <i className="fas fa-search" id="searchGlass"></i>
+            </div>
+
+            <div className = "filter-menu">
+                <Select 
+                    placeholder = "Choose a Filter" 
+                    value={filters.filter(obj => obj.value === currentFilter)}
+                    options={filters} 
+                    onChange={setFilter}
+                />
             </div>
 
             <div id = "game-style">
@@ -96,7 +151,7 @@ function MyGames() {
         <Dialog style = {{maxWidth: "100%"}} fullScreen open = {open}>
             <Toolbar style = {{maxWidth: "90%"}}> 
                 <IconButton edge="start" color="black" onClick={handleClose} aria-label="close">
-                    <p>Go Back </p>
+                    <p> Close </p>
                 </IconButton>
             </Toolbar>
             <GameModal gameInfo={modalGameInfo} />

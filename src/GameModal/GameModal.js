@@ -33,19 +33,24 @@ function GameModal({ gameInfo }) {
     
     function joinGameSession(e){
         e.preventDefault()
-        if(!gameInfo.data()[store.getState().username]){
-            db.collection("current_games").doc(e.target.value).update({
+        if(gameInfo.data()["players"].indexOf(store.getState().username) === -1){
+            db.collection("joinable_games").doc(String(e.target.value)).update({
                 player_count: firebase.firestore.FieldValue.increment(1),
-                [store.getState().username]: {cash: Number(gameInfo.data().starting_amount), canEdit: true},
+                [store.getState().username]: {cash: Number(gameInfo.data().starting_amount), canEdit: true, total: Number(gameInfo.data().starting_amount)},
                 players: firebase.firestore.FieldValue.arrayUnion( store.getState().username )
             })  
             db.collection("users").doc(store.getState().username).update({
                 current_games: firebase.firestore.FieldValue.arrayUnion(e.target.value)
             })
+            let new_state_games = store.getState().MyGames
+            new_state_games.push(e.target.value)
             store.dispatch({ // store user info in global state 
-                type: "UPDATE_GAMES",
-                payload: {
-                    MyGames: [...store.getState().username, e.target.value]        
+                type: "ADD_POST",
+                payload: {         
+                    username: store.getState().username,
+                    email: store.getState().email,
+                    userInfo: store.getState().userInfo,
+                    MyGames: new_state_games       
                 } 
             }) 
         }
@@ -57,7 +62,7 @@ function GameModal({ gameInfo }) {
     }
 
     const [dailyCoinPrices, setDailyCoinPrices] = useState({})
-    function displayViewPortfolio(username, portfolio){
+    function displayViewPortfolio(username, portfolio, ranking){
         db.collection('coin_prices').onSnapshot(snapshot => {  
             snapshot.docs.map(doc => (
                 setDailyCoinPrices({...dailyCoinPrices, [doc.id] : Number(doc.data().value)})  
@@ -72,7 +77,7 @@ function GameModal({ gameInfo }) {
 
         console.log(Tokens)
         setView(true)
-        setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} />)
+        setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} rank={ranking} />)
     }
 
     const viewClose = () => {
@@ -123,23 +128,39 @@ function GameModal({ gameInfo }) {
             <div id="game-info">
                 <div className = "game-information">
                     <h2><u>Game Information:</u></h2>
-                    <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>
-                    <br/>
-                    <br/>
+                    <br />
                     <h3 id= "number">{gameInfo.data().player_count} / {gameInfo.data().max_players} <br /> Players</h3>
-                    <br/>
+                    <br />  
+
+                    <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>  
+                    <h3>Duration: {gameInfo.data().duration} {gameInfo.data().duration === 1 ? `week`: `weeks`}</h3>
                     <br />
 
-                    <h3>Duration: {gameInfo.data().duration} {gameInfo.data().duration === 1 ? `week`: `weeks`}</h3>
-                    <br/>
                     <h3>Start date:<br/>{String(new Date(gameInfo.data().start_date)).substring(0,16)}</h3>
-                    <br/>
+                    <br /> 
                     <h3>End date: <br/>{String(new Date(gameInfo.data().end_date)).substring(0,16)}</h3>
                     <br />
+
                     {days !== "" ? (
-                        <h3>Countdown: {days}: {hours}: {minutes}: {seconds}</h3>
+                        <div>
+                            <h3>Countdown:</h3>
+                            <h3>{days}</h3>
+                            <h3>{hours}</h3>
+                            <h3>{minutes}</h3>
+                            <h3>{seconds}</h3>
+                        </div>
+                    ) : new Date().getTime() > gameInfo.data().end_date ? (
+                        <div>
+                            <h3>Countdown:</h3>
+                            <p><strong style={{color: "red"}}>This game session is over.</strong></p>
+                        </div>
                     ) : (
-                        <h3>Countdown: {hours}: {minutes}: {seconds}</h3>
+                        <div>
+                            <h3>Countdown:</h3>
+                            <h3>{hours}</h3>
+                            <h3>{minutes}</h3>
+                            <h3>{seconds}</h3>
+                        </div>
                     )}
 
                     {gameInfo.data().players.indexOf(store.getState().username) === -1 && gameInfo.data().player_count < gameInfo.data().max_players ? (
@@ -166,20 +187,28 @@ function GameModal({ gameInfo }) {
                 )
                 }
                 {players ? (
-                    console.log(players),
                     players.map((player) => (
                         <div id="leaderboard">
-                            <span> {gameInfo.data().players.indexOf(player) + 1}.) </span>                 
-                            <span>{player}</span>
+                            {gameInfo.data().players.indexOf(player) + 1 === 1 ? (
+                                <span style={{color: "goldenrod", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}st Place: </span>
+                            ) : gameInfo.data().players.indexOf(player) + 1 === 2 ? (
+                                <span style={{color: "silver", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}nd Place: </span>
+                            ) : gameInfo.data().players.indexOf(player) + 1 === 3 ? (
+                                <span style={{color: "brown", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}rd Place: </span>
+                            ) : (
+                                <span style={{color: "black", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}th Place: </span>
+                            )
+                            }               
+                            <span><strong>{player}</strong></span>
                            
                             <span id="portfolio-btns">
                                 {store.getState().username === player && gameInfo.data()[player]["canEdit"]  && new Date().getTime() < gameInfo.data().start_date ? (
                                     <span>
                                         <span onClick={() => {displayEditPortfolio(player, gameInfo.data()[player])}} className="edit-portfolio-btn"><u>Edit Portfolio</u></span>
-                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player])}} className="view-portfolio-btn"><u>View Portfolio</u></span>
+                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player], gameInfo.data().players.indexOf(player) + 1)}} className="view-portfolio-btn"><u>View Portfolio</u></span>
                                     </span>
                                     ) : (
-                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player])}} className="view-portfolio-btn"><u>View Portfolio</u></span>
+                                        <span onClick={() => {displayViewPortfolio(player, gameInfo.data()[player], gameInfo.data().players.indexOf(player) + 1)}} className="view-portfolio-btn"><u>View Portfolio</u></span>
                                     )
                                 }
                             </span>            
@@ -192,11 +221,11 @@ function GameModal({ gameInfo }) {
                 </div>
 
             <div className = "rules">
-                <h1>General Rules</h1>
+                <h1><u>General Rules</u></h1>
                 <h3>1.) Don't refer to other user's portfolios as a means to make real life financial investments. Not that any of you would...</h3>
                 <h3>2.) Don't try to exploit any bugs you come across. Have some integrity. Reach out to us explaining the bug.</h3>
                 <h3>3.) You only get to finalize your portfolio once. Do your research, correctly input your investments, and hit "Submit". </h3>
-                <h3>4.) To reiterate, do NOT make any real life financial decisions based on the results/outcomes of these games. Seriously.</h3>
+                <h3>4.) To reiterate, do NOT make any real life financial decisions based on the results/outcomes of these games. Seriously...</h3>
                 <h3>5.) Relax and have fun with it :)</h3>
             </div>
 
