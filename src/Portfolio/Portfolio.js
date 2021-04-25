@@ -15,7 +15,6 @@ function EditPortfolio({username, gameId, portfolio}) {
     const [coinAmount, setCoinAmount] = useState(0)
     const [cash, setCash] = useState(Number(portfolio["cash"]))
 
-
     async function addCoin(e){
         if(cash - coinAmount < 0){
             alert("Not enough funds remaining")
@@ -26,7 +25,6 @@ function EditPortfolio({username, gameId, portfolio}) {
             return
         }
         else{
-            console.log("whyyyy")
             let name = coinName
             let convertedPrice = 0
             db.collection("coin_prices").doc(name).get().then((doc) => {
@@ -86,6 +84,7 @@ function EditPortfolio({username, gameId, portfolio}) {
         assets["total"] = Number(portfolio["cash"])
         assets["canEdit"] = false
         db.collection("joinable_games").doc(gameId).set({[store.getState().username]: assets}, {merge : true})
+        window.location.reload()
     }
 
     return (
