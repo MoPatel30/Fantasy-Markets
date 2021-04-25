@@ -10,10 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Select from "react-select";
-<<<<<<< HEAD
 import { partition } from 'd3'
-=======
->>>>>>> 8f263e8dea6bf8bd2d7513ed526b0f2759cd4cee
 
 
 
@@ -26,10 +23,6 @@ function FindGames() {
     const [search, setSearch] = useState("");
 
     const [unfiltered, setUnfiltered] = useState([]) // testing
-<<<<<<< HEAD
-=======
-    const [isFiltered, setIsFiltered] = useState(false) // testing
->>>>>>> 8f263e8dea6bf8bd2d7513ed526b0f2759cd4cee
     const [currentFilter, setCurrentFilter] = useState() // testing
     const filters = [
         { label: "Choose a Filter", value: 0 },
@@ -66,7 +59,6 @@ function FindGames() {
 
       }, [search, games]);
 
-<<<<<<< HEAD
     const quicksort = (array, l, h, filter) => {
 
         var p
@@ -119,42 +111,6 @@ function FindGames() {
         if(e.value !== 0){
             setFilteredGame(quicksort(filteredGame, 0, filteredGame.length - 1, e.value))
         }
-=======
-    const setFilter = e => {
-        setCurrentFilter(e.value)
-        var toSort = filteredGame.map((game) => {
-            return game
-        })
-        if(!isFiltered){
-            setUnfiltered(toSort);
-            setIsFiltered(true)
-        }
-        //"Choose a Filter"
-        if(e.value === 0){
-            toSort = unfiltered.map((game) => {
-                return game
-            })
-            setIsFiltered(false)
-            console.log("filter")
-        }
-        //"Starting Cash (High to Low)"
-        if(e.value === 1){
-            toSort.sort((a,b) => b.data().starting_amount - a.data().starting_amount)
-        }
-        //"Starting Cash (Low to High)"
-        if(e.value === 2){
-            toSort.sort((a,b) => a.data().starting_amount - b.data().starting_amount)
-        }
-        //"Player Count (High to Low)"
-        if(e.value === 3){
-            toSort.sort((a,b) => b.data().player_count - a.data().player_count)
-        }
-        //"Player Count (Low to High)"
-        if(e.value === 4){
-            toSort.sort((a,b) => a.data().player_count - b.data().player_count)
-        }
-        setFilteredGame(toSort)
->>>>>>> 8f263e8dea6bf8bd2d7513ed526b0f2759cd4cee
     }
 
     return (
