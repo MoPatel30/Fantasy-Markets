@@ -2,17 +2,7 @@ import firebase from "firebase"
 
 
 const firebaseConfig = {
-<<<<<<< HEAD
     
-=======
-    apiKey: "AIzaSyBaKSWpNkKfHJw9pX7NEAMM0VrsBHpqxgw",
-    authDomain: "playfantasymarket.firebaseapp.com",
-    projectId: "playfantasymarket",
-    storageBucket: "playfantasymarket.appspot.com",
-    messagingSenderId: "186290164923",
-    appId: "1:186290164923:web:2b9ecf8d280e3f671c459e",
-    measurementId: "G-TTCEBDPLZP"
->>>>>>> 8f263e8dea6bf8bd2d7513ed526b0f2759cd4cee
 };
 
 firebase.initializeApp(firebaseConfig)
