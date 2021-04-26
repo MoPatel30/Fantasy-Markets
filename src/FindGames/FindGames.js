@@ -124,7 +124,7 @@ function FindGames() {
 
             <div className = "filter-menu">
                 <Select 
-                    width="200px"
+                    
                     placeholder = "Choose a Filter" 
                     value={filters.filter(obj => obj.value === currentFilter)}
                     options={filters} 
@@ -147,7 +147,7 @@ function FindGames() {
                             </div>
                             <br />
                             <div id="Midspanner">                                 
-                                <h3>{instance.data().player_count} / {instance.data().max_players} <br /> Players</h3>
+                                <h3>{instance.data().players.length} / {instance.data().max_players} <br /> Players</h3>
                             </div>
                             <br />
                             <hr style={{width: "100%"}} />

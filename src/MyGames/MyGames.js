@@ -135,7 +135,10 @@ function MyGames() {
 
             <div id = "game-style">
             {filteredGame.length === 0 ? (
-                <p style={{color: "white"}}>Head over to "Find Games" to join an upcoming game session!</p>
+                <div className = "info-text">
+                    <p style={{color: "white"}}>Head over to "Find Games" to join an upcoming game session!</p> 
+                    <p style = {{color: "rgb(255, 103, 103)"}}>Games will only appear after they start!</p>
+                </div>
             ) : (
             filteredGame.map((instance) => (
                 <div>

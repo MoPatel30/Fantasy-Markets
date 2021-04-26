@@ -9,7 +9,13 @@
     align-items: center;
     flex-direction: column;
 }
-
+.info-text{
+    position: relative;
+    width:100%;
+}
+#game-style{
+    width:100%;
+}
 #spanner{
     display: flex;
     justify-content: space-around;

@@ -83,13 +83,9 @@
 	text-align: center;
 	font-style: normal;
 	width: 100%;
-	border: 1px solid #4089F6;
+	
 	border-width: 1px 1px 3px;
 	margin-bottom: 10px;
 	cursor: pointer;
 }
-.form-style-5 input[type="submit"]:hover,
-.form-style-5 input[type="button"]:hover
-{
-	background:  #4089F6;
-}
+
