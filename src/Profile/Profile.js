@@ -92,15 +92,18 @@ function Profile({ email, userInfo }) {
             <img className="profile-pic" src={userInfo.photoURL} alt="Profile Pic" /> 
 
             {editBio ? (
-                <div> 
+                <div className = "bio-size"> 
                     <textarea
                         type="text" 
+                        maxLength="140"
+                        rows = "4"
+                        cols = "50"
                         defaultValue={bio}
                         onChange={(e) => setTempBio(e.target.value)}
                     />
 
-                    <button onClick={saveBio}>OK</button>
-                    <button onClick={changeBio}>X</button>
+                    <button className = "BTN"onClick={saveBio}>OK</button>
+                    <button className = "BTN" onClick={changeBio}>X</button>
                 </div>
             ) 
             : (
