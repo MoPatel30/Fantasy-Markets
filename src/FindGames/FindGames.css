@@ -93,6 +93,7 @@ figure > figcaption {
     margin-bottom: 1.2rem;
     color:white;
     box-shadow: inset 0 0 2000px rgba(64, 137, 246, 0.7);
+    transition: 200ms ease-out;
 }
 .flip-card:hover{
     transform: scale(1.05);
@@ -100,6 +101,9 @@ figure > figcaption {
 
 }
 
+.filter-menu{
+    width:15%;
+}
 @media (min-width: 481px) and (max-width:767px){
     #searchGlass{
         margin-top: 0.75%;
@@ -109,6 +113,9 @@ figure > figcaption {
     }    
     .searchbar {
         width: 80%;
+    }
+    .filter-menu {
+        width: 53%;
     }
 }
 
@@ -121,5 +128,8 @@ figure > figcaption {
     }
     .searchbar {
         width: 80%;
+    }
+    .filter-menu {
+        width: 53%;
     }
 }

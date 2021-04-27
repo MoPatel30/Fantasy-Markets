@@ -157,4 +157,11 @@ div input + input{
         font-size: 2rem;
         top: 27rem;
     }
+    .portfolio{
+        width:100%;
+        padding: 1rem;
+    }
+    .add-coin{
+        font-size: 0.8rem;
+    }
   }
