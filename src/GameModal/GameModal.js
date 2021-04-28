@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 
 
-
 function GameModal({ gameInfo }) {
     const [Portfolio, setPortfolio] = useState()
     const [players, setPlayers] = useState([])
@@ -35,7 +34,6 @@ function GameModal({ gameInfo }) {
         e.preventDefault()
         if(gameInfo.data()["players"].indexOf(store.getState().username) === -1){
             db.collection("joinable_games").doc(String(e.target.value)).update({
-                player_count: firebase.firestore.FieldValue.increment(1),
                 [store.getState().username]: {cash: Number(gameInfo.data().starting_amount), canEdit: true, total: Number(gameInfo.data().starting_amount)},
                 players: firebase.firestore.FieldValue.arrayUnion( store.getState().username )
             })  
@@ -61,23 +59,28 @@ function GameModal({ gameInfo }) {
         setPortfolio(<EditPortfolio username={username} gameId={gameInfo.id} portfolio={portfolio} />)
     }
 
-    const [dailyCoinPrices, setDailyCoinPrices] = useState({})
-    function displayViewPortfolio(username, portfolio, ranking){
-        db.collection('coin_prices').onSnapshot(snapshot => {  
-            snapshot.docs.map(doc => (
-                setDailyCoinPrices({...dailyCoinPrices, [doc.id] : Number(doc.data().value)})  
-            )) 
-        })     
-   
+    const [coinNames, setCoinNames] = useState([])
+    const [dailyCoinPrices, setDailyCoinPrices] = useState([])
+    async function getMarkers() {
+        const prices = await firebase.firestore().collection('coin_prices')
+        prices.get().then((querySnapshot) => {
+            setDailyCoinPrices(querySnapshot.docs.map(doc => doc.data().value)) 
+            setCoinNames(querySnapshot.docs.map(doc => doc.id))   
+          }) 
+      }
+    useEffect(() => {
+       getMarkers()   
+    }, [])
+
+    function displayViewPortfolio(username, portfolio, ranking){  
         setTokens(
             Object.keys(portfolio).map((coin) => ( coin ))     
         )
 
-        setTimeout(() => {}, 2000)
+        setTimeout(() => {}, 3000)
 
-        console.log(Tokens)
         setView(true)
-        setPortfolio(<ViewPortfolio username={username} portfolio={portfolio} tokens={Tokens} rank={ranking} />)
+        setPortfolio(<ViewPortfolio dailyCoinPrices={dailyCoinPrices} coinNames={coinNames} username={username} portfolio={portfolio} tokens={Tokens} rank={ranking} />)
     }
 
     const viewClose = () => {
@@ -129,7 +132,7 @@ function GameModal({ gameInfo }) {
                 <div className = "game-information">
                     <h2><u>Game Information:</u></h2>
                     <br />
-                    <h3 id= "number">{gameInfo.data().player_count} / {gameInfo.data().max_players} <br /> Players</h3>
+                    <h3 id= "number">{gameInfo.data().players.length} / {gameInfo.data().max_players} <br /> Players</h3>
                     <br />  
 
                     <h3>Starting Amount: {gameInfo.data().starting_amount} USD</h3>  
@@ -163,7 +166,7 @@ function GameModal({ gameInfo }) {
                         </div>
                     )}
 
-                    {gameInfo.data().players.indexOf(store.getState().username) === -1 && gameInfo.data().player_count < gameInfo.data().max_players ? (
+                    {gameInfo.data().players.indexOf(store.getState().username) === -1 && gameInfo.data().players.length < gameInfo.data().max_players ? (
                         <div>
                             <button id="gameId" value={`${gameInfo.id}`} onClick={(e) => {joinGameSession(e)}}>Enter Game</button> 
                         </div>
@@ -190,11 +193,20 @@ function GameModal({ gameInfo }) {
                     players.map((player) => (
                         <div id="leaderboard">
                             {gameInfo.data().players.indexOf(player) + 1 === 1 ? (
-                                <span style={{color: "goldenrod", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}st Place: </span>
+                                <span>
+                                    <span><img src="https://img.icons8.com/offices/20/000000/medal2.png"/></span>
+                                    <span style={{color: "goldenrod", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}st Place: </span>
+                                </span>
                             ) : gameInfo.data().players.indexOf(player) + 1 === 2 ? (
-                                <span style={{color: "silver", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}nd Place: </span>
+                                <span>
+                                    <span><img src="https://img.icons8.com/officel/20/000000/medal-second-place.png"/></span>
+                                    <span style={{color: "silver", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}nd Place: </span>
+                                </span>
                             ) : gameInfo.data().players.indexOf(player) + 1 === 3 ? (
-                                <span style={{color: "brown", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}rd Place: </span>
+                                <span>
+                                    <span><img src="https://img.icons8.com/officel/20/000000/medal2-third-place.png"/></span>
+                                    <span style={{color: "brown", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}rd Place: </span>
+                                </span>
                             ) : (
                                 <span style={{color: "black", marginLeft: "5px"}}> {gameInfo.data().players.indexOf(player) + 1}th Place: </span>
                             )
@@ -228,7 +240,7 @@ function GameModal({ gameInfo }) {
                 <h3>4.) To reiterate, do NOT make any real life financial decisions based on the results/outcomes of these games. Seriously...</h3>
                 <h3>5.) Relax and have fun with it :)</h3>
             </div>
-
+       
             {/* The Modal for Viewing your Portfolio */}
             <Dialog fullWidth maxWidth={'sm'} open = {view}>
                 <IconButton edge="start" color="black" onClick={viewClose} aria-label="close">

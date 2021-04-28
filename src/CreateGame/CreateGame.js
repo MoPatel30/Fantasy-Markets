@@ -20,6 +20,16 @@ function CreateGame() {
             console.log(pair[0] + ': ' + pair[1])
         }
 
+        let session_name = data[0].substring(0, 24)
+        let session_amount = Number(data[1])
+
+        if(session_name.length === 0 || !session_name){
+            session_name = "No Name"
+        }
+        if(session_amount < 1000 || !session_amount){
+            session_amount = 1000
+        }
+
         let time = 1209600000
         if(data[2] === "1"){
             time = 1209600000 / 2
@@ -28,15 +38,14 @@ function CreateGame() {
         } 
        
         docRef.add({
-            name: data[0].substring(0, 24),
+            name: session_name,
             creator: create,
             duration: Number(data[2]),
-            starting_amount: data[1],
+            starting_amount: session_amount,
             start_date: Math.round(new Date().getTime()) + 86400000,
             end_date: Math.round(new Date().getTime()) + time,
             max_players: data[3],
-            player_count: 1,
-            [create]: {"cash": Number(data[1]), "canEdit": true, "total": Number(data[1])},
+            [create]: {"cash": session_amount, "canEdit": true, "total": session_amount},
             players: [create]
         })
         .then((doc) => {
@@ -78,8 +87,6 @@ function CreateGame() {
                             <option value="6">6</option>
                             <option value="7">7</option>
                             <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
                         </optgroup>
                     </select>      
                 </fieldset>

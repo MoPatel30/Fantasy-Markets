@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { db } from "../firebase"
 import firebase from "firebase"
 import store from ".././Redux/index"
-import * as d3 from 'd3'
 const rp = require('request-promise');
 
 
@@ -47,7 +46,7 @@ function EditPortfolio({username, gameId, portfolio}) {
                             },
                             
                             headers: {
-                            'X-CMC_PRO_API_KEY': "1d62807d-b858-4715-9a04-5fdfb1414cb0"
+                            'X-CMC_PRO_API_KEY': ""
                             },
                             json: true,
                             gzip: true
@@ -83,7 +82,12 @@ function EditPortfolio({username, gameId, portfolio}) {
         assets["cash"] = cash
         assets["total"] = Number(portfolio["cash"])
         assets["canEdit"] = false
-        db.collection("joinable_games").doc(gameId).set({[store.getState().username]: assets}, {merge : true})
+        db.collection("joinable_games").doc(gameId).set({[username]: assets}, {merge : true})
+        
+        setTimeout(() => {
+            
+        }, 3000);
+
         window.location.reload()
     }
 
@@ -103,9 +107,9 @@ function EditPortfolio({username, gameId, portfolio}) {
             {Object.keys(assets).map(currency => (
                 <div>
                     <div className = "coin-info">
-                        <p className="item">Name: {currency}</p>
-                        <p className="item">Amount Invested: ${cashInvested[currency]} USD</p>
-                        <p className="item">Current position: <strong>{assets[currency]} {currency}</strong></p>
+                        <span className="item">Name: {currency}</span>
+                        <span className="item">Amount Invested: ${cashInvested[currency]} USD</span>
+                        <span className="item">Current position: <strong>{Math.round(assets[currency] * 10000) / 10000} {currency}</strong></span>
                     </div>          
                 </div> 
             ))
@@ -125,116 +129,20 @@ const mapStateToProps = (state) => ({
 export default (connect)(mapStateToProps)(EditPortfolio)
 
 
-export function ViewPortfolio({username, portfolio, tokens, rank}){
-    const [coinNames, setCoinNames] = useState([])
-    const [dailyCoinPrices, setDailyCoinPrices] = useState([])
-    const ref = React.createRef()
-
-    async function getMarkers() {
-        const prices = await firebase.firestore().collection('coin_prices')
-        prices.get().then((querySnapshot) => {
-            setDailyCoinPrices(querySnapshot.docs.map(doc => doc.data().value)) 
-            setCoinNames(querySnapshot.docs.map(doc => doc.id))   
-          }) 
-      }
+export function ViewPortfolio({dailyCoinPrices, coinNames, username, portfolio, tokens, rank}){
+    useEffect(() => {
+        console.log(dailyCoinPrices)
+        console.log(coinNames)
+        console.log(username)
+        console.log(portfolio)
+        console.log(tokens)
+        console.log(rank)
+    }, [])
 
     useEffect(() => {
-        getMarkers().then(() => {
-            let total = 0
-            console.log(dailyCoinPrices)
-            console.log(coinNames)
-            for(let token in portfolio){
-                if(token === "canEdit" || token === "total"){
-                    continue
-                }
-                else{
-                    console.log(portfolio[token])
-                    console.log(token)
-    
-                    console.log(dailyCoinPrices[coinNames.indexOf(token)])
-                    total += Math.round(
-                        Number(
-                            portfolio[token] * dailyCoinPrices[coinNames.indexOf(token)]
-                        ) * 100
-                    ) / 100
-                }
-            }
-            console.log(dailyCoinPrices)
-            console.log(portfolio["total"])
-            console.log(total)
-        }).catch((error) => {
-            console.log(error)
-        })
-       
 
-        // let margin = { top: 30, right: 120, bottom: 30, left: 50 }
-        // let width = 960 - margin.left - margin.right
-        // let height = 500 - margin.top - margin.bottom
-        // let tooltip = { width: 100, height: 100, x: 10, y: -30 };
+    }, [tokens])
 
-        // //initialize margin end
-        // var svg = d3.select("body").append("svg")
-        //     .attr("width", width + margin.left + margin.right)
-        //     .attr("height", height + margin.top + margin.bottom)
-        //     .append("g")
-        //     .attr("transform", "translate(" + width/2 + "," + height/2+ ")");
-        
-        // var pie = d3.pie()
-        // .sort(null)
-        // .value(d => d.population);
-
-        // var arc = d3.arc()
-        // .innerRadius(0)
-        // .outerRadius(Math.min(width, height) / 2 - 1);
-
-        // var arcLabel = function(){
-        //     const radius = Math.min(width, height) / 2 * 0.8;
-        //     return d3.arc().innerRadius(radius).outerRadius(radius);
-        // }
-        
-        // let data = [{
-        //     "bitcoin": 34933, 
-        //     "ethereum": 4000, 
-        //     "monero": 900, 
-        //     "uniswap": 1400, 
-        //     "dash": 1200, 
-        //     "cash": 900, 
-        // }]
-
-        // var color = d3.scaleOrdinal()
-        // .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse())
-        // const arcs = pie(data);
-        //     svg.append("g")
-        // .attr("stroke", "white")
-        // .selectAll("path")
-        // .data(arcs)
-        // .enter().append("path")
-        // .attr("fill", d => color(d.data.age))
-        // .attr("d", arc)
-        // .append("title")
-        // .text(d => `${d.data.}: ${d.data.population.toLocaleString()}`);
-
-        // svg.append("g")
-        // .attr("font-family", "sans-serif")
-        // .attr("font-size", 12)
-        // .attr("text-anchor", "middle")
-        // .selectAll("text")
-        // .data(arcs)
-        // .enter().append("text")
-        // .attr("transform", d => `translate(${arcLabel().centroid(d)})`)
-        // .call(text => text.append("tspan")
-        //     .attr("y", "-0.4em")
-        //     .attr("font-weight", "bold")
-        //     .text(d => d.data.age))
-        // .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
-        //     .attr("x", 0)
-        //     .attr("y", "0.7em")
-        //     .attr("fill-opacity", 0.7)
-        //     .text(d => d.data.population.toLocaleString()));
-        
-
-    
-    }, [portfolio, username, tokens])
 
     return(
         <div className = "viewPortfolio">           
@@ -260,7 +168,7 @@ export function ViewPortfolio({username, portfolio, tokens, rank}){
             </div>
 
             <div className="background-color">
-                {tokens.map((coin) => (
+                {Object.keys(portfolio).map((coin) => (
                     coin === "canEdit" || coin === "total" ? (
                         <div></div>
                     ) : (                
@@ -277,8 +185,7 @@ export function ViewPortfolio({username, portfolio, tokens, rank}){
                     ) 
                     ))
                 }
-                <div ref={ref}></div>
-            </div>  
+            </div> 
         </div>
     )
 }

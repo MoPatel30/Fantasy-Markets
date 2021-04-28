@@ -18,7 +18,15 @@
     justify-content: left;
     align-items: flex-start;
     flex-direction: row;
-    
+    cursor: pointer;
+}
+
+.coin-info{
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 5px;
+    width: 80%;
 }
 
 .inputFields{
@@ -36,6 +44,7 @@ button {
     color: white;
     border-radius: 15px;
     font-weight: 900;
+    cursor: pointer;
 }
 .addCoinBtn{
     padding: 0.4rem;
@@ -55,6 +64,7 @@ button {
 
 button:hover{
     background-color: rgb(255, 50, 50);
+    cursor: pointer;
 }
 
 input {

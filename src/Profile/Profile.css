@@ -50,8 +50,58 @@
       width:fit-content;
   } 
 
+  
+.spanner2{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.Midspanner2{
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.non-spanner2{
+  text-align: center;
+  text-indent: 2%;
+}
+.flip-card2 {
+  font-size: 1rem;
+  border: 4px solid white;
+  cursor: pointer;
+  background: inherit;
+  width: 320px;
+  height: 100%;
+  padding: 8px;
+  margin-bottom: 1.2rem;
+  color:white;
+  box-shadow: inset 0 0 2000px rgba(64, 137, 246, 0.7);
+  transition: 200ms ease-out;
+}
+.flip-card2:hover{
+  border: 4px solid white;
+  transform: scale(1.05);
+  box-shadow: inset 0 0 2000px rgba(64, 137, 246, 1);
+
+}
+
+#prev-game-title{
+  margin-top: 4rem;
+}
+#bio{
+  margin-top: 2rem;
+  font-size: 18px;
+  max-width: 30vw;
+}
   /*Smaller Phones */
 @media (min-width: 320px) and (max-width: 480px){
+  #bio{
+    font-size: 14px;
+    max-width: 80vw;
+  }
   .stats{
     flex-direction: column;
     margin-bottom: 2%;

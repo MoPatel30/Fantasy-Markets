@@ -34,38 +34,10 @@
     position: relative;
     left:27%;
 }
-
-/* figure {
+.search-filter-pos{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 100%;
- 
-    margin: auto;
-    background-color: #FFF;
-    background-size: cover;
-    border-radius: 1rem;
-    transition: all 100ms ease-out;
+    flex-direction: row;
 }
-figure:hover {
-    box-shadow: 0 16px 16px -4px rgba(0, 0, 0, 0.3);
-    transform: scale(1.02);
-}
-figure:after {
-    content: "";
-    padding-bottom: 10%;
-    display: block;
-}
-figure > figcaption {
-    margin: 1rem;
-    color: #FFF;
-    font-size: 1.25em;
-    position: relative;
-} */
-
-
 #spanner{
     display: flex;
     justify-content: space-around;
@@ -83,7 +55,6 @@ figure > figcaption {
     text-align: center;
     text-indent: 2%;
 }
-
 .flip-card {
     cursor: pointer;
     background: inherit;
@@ -100,10 +71,10 @@ figure > figcaption {
     box-shadow: inset 0 0 2000px rgba(64, 137, 246, 1);
 
 }
-
 .filter-menu{
     width:15%;
 }
+
 @media (min-width: 481px) and (max-width:767px){
     #searchGlass{
         margin-top: 0.75%;
@@ -116,6 +87,11 @@ figure > figcaption {
     }
     .filter-menu {
         width: 53%;
+    }
+    .search-filter-pos{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 }
 
@@ -131,5 +107,10 @@ figure > figcaption {
     }
     .filter-menu {
         width: 53%;
+    }
+    .search-filter-pos{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 }

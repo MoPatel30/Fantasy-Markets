@@ -85,7 +85,7 @@ function FindGames() {
                 }
             }
             if(filter === 3 || filter === 4){
-                if(array[i].data().player_count < array[p].data().player_count){
+                if(array[i].data().players.length < array[p].data().players.length){
                     [array[i], array[initialHigh]] = [array[initialHigh], array[i]]
                     initialHigh++
                 }
@@ -113,23 +113,25 @@ function FindGames() {
 
     return (
         <div>
-            <div className="searchbar">
-                <input
-                    type="text"
-                    placeholder="Search for a Game"
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <i className="fas fa-search" id="searchGlass"></i>
-            </div>
+            <div className="search-filter-pos">
+                <div className="searchbar">
+                    <input
+                        type="text"
+                        placeholder="Search for a Game"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <i className="fas fa-search" id="searchGlass"></i>
+                </div>
 
-            <div className = "filter-menu">
-                <Select 
-                    
-                    placeholder = "Choose a Filter" 
-                    value={filters.filter(obj => obj.value === currentFilter)}
-                    options={filters} 
-                    onChange={setFilter}
-                />
+                <div className = "filter-menu">
+                    <Select 
+                        
+                        placeholder = "Choose a Filter" 
+                        value={filters.filter(obj => obj.value === currentFilter)}
+                        options={filters} 
+                        onChange={setFilter}
+                    />
+                </div>
             </div>
 
             <div id = "game-style">

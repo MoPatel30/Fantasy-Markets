@@ -16,6 +16,10 @@
 #game-style{
     width:100%;
 }
+.search-filter-pos{
+    display: flex;
+    flex-direction: row;
+}
 #spanner{
     display: flex;
     justify-content: space-around;
