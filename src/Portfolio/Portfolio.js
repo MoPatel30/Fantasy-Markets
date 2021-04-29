@@ -46,7 +46,7 @@ function EditPortfolio({username, gameId, portfolio}) {
                             },
                             
                             headers: {
-                            'X-CMC_PRO_API_KEY': ""
+                            'X-CMC_PRO_API_KEY': "1d62807d-b858-4715-9a04-5fdfb1414cb0"
                             },
                             json: true,
                             gzip: true
@@ -82,13 +82,15 @@ function EditPortfolio({username, gameId, portfolio}) {
         assets["cash"] = cash
         assets["total"] = Number(portfolio["cash"])
         assets["canEdit"] = false
-        db.collection("joinable_games").doc(gameId).set({[username]: assets}, {merge : true})
-        
-        setTimeout(() => {
+        db.collection("joinable_games").doc(gameId).set({[username]: assets}, {merge : true}).then(() => {
+            setTimeout(() => {
             
-        }, 3000);
-
-        window.location.reload()
+            }, 3000);
+    
+            window.location.reload()
+        }).catch((error) => (
+            console.log(error)
+        ))
     }
 
     return (
@@ -114,8 +116,10 @@ function EditPortfolio({username, gameId, portfolio}) {
                 </div> 
             ))
             }   
-            <span className="textWarning">Important: You can only finalize your portfolio once! Choose wisely...</span>
+            <span className="textWarning">Important: You can only finalize your portfolio once! Choose wisely...</span>          
+ 
             <button className="submitBtn" onClick = {submitPortfolio}>Submit Portfolio</button>
+          
         </div>
     )
 }

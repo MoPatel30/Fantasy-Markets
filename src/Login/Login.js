@@ -42,6 +42,7 @@ export const Login = (props) => {
                             db.collection("users").doc(username).set({
                                 display_name: username,
                                 bio: `Hi, my name is ${result.user.displayName}!`,
+                                lastCreatedSession: new Date().getTime - 90000000,
                                 wins: 0,
                                 current_games: [],
                                 previous_games: [],

@@ -156,9 +156,9 @@ for joinable_game in joinable_games:
         db.collection(u'current_games').document(game_id).set(game_info)
         print(game_id, 'moved to current games')
     elif int(time.time() * 1000) > start_date and num_of_players <= 1:
-        db.collection(u'joinable_games').document(game_id).delete()
+        db.collection(u'joinable_games').document(game_id).delete()     
         db.collection(u'users').document(game_info["creator"]).update({
-            "current_games": ArrayRemove(game_id)
+            "current_games": ArrayRemove([game_id])
         })
         print("sorry, not enough players")
     else:
@@ -181,15 +181,15 @@ for current_game in current_games:
         for player in players:
             # add game_id to each users previous game profile & remove it from current games
             db.collection(u'users').document(player).update({
-                "previous_games": ArrayUnion(game_id),
-                "current_games": ArrayRemove(game_id)
+                "previous_games": ArrayUnion([game_id]),
+                "current_games": ArrayRemove([game_id])
             })
             if game_info[player]["total"] > first_place_total:
                 first_place_total = game_info[player]["total"]
                 first_place_user = player
         
         db.collection(u'users').document(first_place_user).update({
-            "games_won": ArrayUnion( game_id ),
+            "games_won": ArrayUnion([game_id]),
             "wins": Increment(1)
         })        
         print(game_id, 'moved to previous games')
@@ -199,6 +199,3 @@ for current_game in current_games:
 db.collection(u"script_counter").document("count").update({
     "count": Increment(1)
 })
-
-# stop for 5 minutes
-sleep(300)

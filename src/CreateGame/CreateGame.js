@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import "./CreateGame.css";
 import { db } from "../firebase"
 import store from ".././Redux/index"
@@ -9,6 +9,14 @@ function CreateGame() {
     const docRef = db.collection("joinable_games")
     const create = store.getState().username
     const userRef = db.collection("users")
+    const [lastCreatedSession, setLastCreatedSession] = useState(undefined)
+
+    useEffect(() => {
+        userRef.doc(create).get().then((doc) => {
+            setLastCreatedSession(doc.data().lastCreatedSession)
+            console.log(doc.data())
+        })
+    }, [])
 
     function createGame(e){
         e.preventDefault()
@@ -36,27 +44,31 @@ function CreateGame() {
         } else{
             time = 1209600000
         } 
-       
-        docRef.add({
-            name: session_name,
-            creator: create,
-            duration: Number(data[2]),
-            starting_amount: session_amount,
-            start_date: Math.round(new Date().getTime()) + 86400000,
-            end_date: Math.round(new Date().getTime()) + time,
-            max_players: data[3],
-            [create]: {"cash": session_amount, "canEdit": true, "total": session_amount},
-            players: [create]
-        })
-        .then((doc) => {
-            console.log("Document successfully written!", doc.id)
-            userRef.doc(create).update({
-               current_games: firebase.firestore.FieldValue.arrayUnion(doc.id)
-           })
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error)
-        })
+        
+        let nowTimestamp = new Date().getTime() 
+        if(nowTimestamp + 86400000 > lastCreatedSession){
+            docRef.add({
+                name: session_name,
+                creator: create,
+                duration: Number(data[2]),
+                starting_amount: session_amount,
+                start_date: Math.round(new Date().getTime()) + 86400000,
+                end_date: Math.round(new Date().getTime()) + time,
+                max_players: data[3],
+                [create]: {"cash": session_amount, "canEdit": true, "total": session_amount},
+                players: [create]
+            })
+            .then((doc) => {
+                console.log("Document successfully written!", doc.id)
+                userRef.doc(create).update({
+                lastCreatedSession: nowTimestamp,
+                current_games: firebase.firestore.FieldValue.arrayUnion(doc.id)
+            })
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error)
+            })
+        }
     }
 
     return (
@@ -91,6 +103,7 @@ function CreateGame() {
                     </select>      
                 </fieldset>
                 <button onClick={(e) => createGame(e)}> Start Game </button>
+                <p>Note: You can create a game session once every 24 hours</p>
             </form>
         </div>
     )
