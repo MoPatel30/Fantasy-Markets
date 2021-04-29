@@ -46,7 +46,7 @@ function CreateGame() {
         } 
         
         let nowTimestamp = new Date().getTime() 
-        if(nowTimestamp + 86400000 > lastCreatedSession){
+        if(nowTimestamp  > lastCreatedSession + 86400000){
             docRef.add({
                 name: session_name,
                 creator: create,
