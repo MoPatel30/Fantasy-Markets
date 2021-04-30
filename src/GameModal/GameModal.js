@@ -230,7 +230,7 @@ function GameModal({ gameInfo }) {
                     <p>No Players Found</p>
                 )
                 }
-                </div>
+            </div>
 
             <div className = "rules">
                 <h1><u>General Rules</u></h1>
